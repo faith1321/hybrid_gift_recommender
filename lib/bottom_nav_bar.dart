@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget bottom_nav_bar (BuildContext context, int index, ) {
+Widget bottom_nav_bar (BuildContext context, int index) {
   return Scaffold(
     bottomNavigationBar: BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
@@ -28,7 +28,7 @@ Widget bottom_nav_bar (BuildContext context, int index, ) {
       ],
         currentIndex: index,
         selectedItemColor: Colors.amber[800],
-        // onTap: _onItemTapped,
+        //onTap: onItemTapped(context),
     ),
   );
 }
