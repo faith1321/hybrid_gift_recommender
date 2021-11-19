@@ -2,31 +2,54 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/bottom_nav_bar.dart';
-import 'package:hybrid_gift/screens/home.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hybrid_gift/app/auth_widget.dart';
+import 'package:hybrid_gift/app/home/homepage.dart';
+import 'package:hybrid_gift/app/onboarding/onboarding_page.dart';
+import 'package:hybrid_gift/app/onboarding/onboarding_view_model.dart';
+import 'package:hybrid_gift/app/sign_in/sign_in_page.dart';
+import 'package:hybrid_gift/app/top_level_providers.dart';
+import 'package:hybrid_gift/routing/app_router.dart';
+import 'package:hybrid_gift/services/shared_preferences_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  final sharedPreferences = await SharedPreferences.getInstance();
+  runApp(ProviderScope(
+    overrides: [
+      sharedPreferencesServiceProvider.overrideWithValue(
+        SharedPreferencesService(sharedPreferences),
+      ),
+    ],
+    child: const MyApp(),
+  ));
+}
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Flutter Code Sample';
-
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(create: (context) => bottom_nav_bar(context, 0)),
-      ],
-      child: MaterialApp(
-        title: _title,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const MyHome(),
-        },
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      debugShowCheckedModeBanner: false,
+      home: AuthWidget(
+        nonSignedInBuilder: (_) => Consumer(
+          builder: (context, ref, _) {
+            final didCompleteOnboarding =
+                ref.watch(onboardingViewModelProvider);
+            return didCompleteOnboarding ? const SignInPage() : const OnboardingPage();
+          },
+        ),
+        signedInBuilder: (_) => const HomePage(),
       ),
+      onGenerateRoute: (settings) =>
+          AppRouter.onGenerateRoute(settings, firebaseAuth),
     );
   }
 }
