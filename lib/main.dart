@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (context) => bottom_nav_bar(context, 0)),
+        Provider(create: (context) => bottomNavBar(context, 0)),
       ],
       child: MaterialApp(
         title: _title,

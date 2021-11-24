@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget bottom_nav_bar (BuildContext context, int index) {
+Widget bottomNavBar (BuildContext context, int index) {
   return Scaffold(
     bottomNavigationBar: BottomNavigationBar(
       items: const <BottomNavigationBarItem>[

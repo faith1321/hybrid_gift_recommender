@@ -49,7 +49,7 @@ class _MyHomeState extends State<MyHome> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: bottom_nav_bar(context, _selectedIndex),
+      bottomNavigationBar: bottomNavBar(context, _selectedIndex),
     );
   }
 }
