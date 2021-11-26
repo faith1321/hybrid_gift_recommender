@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "978835864073",
-    "project_id": "fir-flutter-codelab-c5418",
-    "storage_bucket": "fir-flutter-codelab-c5418.appspot.com"
+    "project_number": "412587128211",
+    "project_id": "hybrid-gifts",
+    "storage_bucket": "hybrid-gifts.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:978835864073:android:a365672d43d6a48b6896d8",
+        "mobilesdk_app_id": "1:412587128211:android:5fac10f461b466799d2466",
         "android_client_info": {
-          "package_name": "com.example.gtk_flutter"
+          "package_name": "com.project.hybrid_gifts"
         }
       },
       "oauth_client": [
         {
-          "client_id": "978835864073-7n7frp41hsniqn3ijcdi7o06g507ube8.apps.googleusercontent.com",
+          "client_id": "412587128211-85rddj41ltusav8c28i9c0lca6kihhup.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDplMp6Ro0orvspItPiQ95DEVZUSzo5Ia4"
+          "current_key": "AIzaSyB0wi6sEWHPurRCnc2JobSf_cZ2-j9YiSo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "978835864073-7n7frp41hsniqn3ijcdi7o06g507ube8.apps.googleusercontent.com",
+              "client_id": "412587128211-85rddj41ltusav8c28i9c0lca6kihhup.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gtk_flutter/main.dart';
+import 'package:hybrid_gift/main.dart';
 
 void main() {
   testWidgets('Basic rendering', (tester) async {

@@ -1,4 +1,4 @@
-package com.example.gtk_flutter
+package com.project.hybrid_gifts
 
 import io.flutter.embedding.android.FlutterActivity
 

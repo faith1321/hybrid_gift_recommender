@@ -2,22 +2,22 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'widgets.dart';
 
-class GuestBookMessage {
-  GuestBookMessage({required this.name, required this.message});
+class UserBookMessage {
+  UserBookMessage({required this.name, required this.message});
   final String name;
   final String message;
 }
 
-class GuestBook extends StatefulWidget {
-  const GuestBook({required this.addMessage, required this.messages});
+class UserBook extends StatefulWidget {
+  const UserBook({required this.addMessage, required this.messages});
   final FutureOr<void> Function(String message) addMessage;
-  final List<GuestBookMessage> messages;
+  final List<UserBookMessage> messages;
 
   @override
-  _GuestBookState createState() => _GuestBookState();
+  _UserBookState createState() => _UserBookState();
 }
 
-class _GuestBookState extends State<GuestBook> {
+class _UserBookState extends State<UserBook> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_GuestBookState');
   final _controller = TextEditingController();
 
