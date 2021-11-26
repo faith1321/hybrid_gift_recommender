@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/authentication.dart';
-import 'package:hybrid_gift/src/guest_book.dart';
 import 'package:hybrid_gift/src/widgets.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _StatefulWidgetState();
+}
+
+class _StatefulWidgetState extends State<HomePage> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Sth',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Sth 2.0',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +44,7 @@ class HomePage extends StatelessWidget {
       // ),
       body: ListView(
         children: <Widget>[
-          Image.asset('assets/codelab.png'),
           const SizedBox(height: 8),
-          const IconAndDetail(Icons.calendar_today, 'October 30'),
-          const IconAndDetail(Icons.location_city, 'San Francisco'),
           Consumer<ApplicationState>(
             builder: (context, appState, _) => Authentication(
               email: appState.email,
@@ -32,17 +57,17 @@ class HomePage extends StatelessWidget {
               signOut: appState.signOut,
             ),
           ),
-          const Divider(
-            height: 8,
-            thickness: 1,
-            indent: 8,
-            endIndent: 8,
-            color: Colors.grey,
-          ),
-          const Header("What we'll be doing"),
-          const Paragraph(
-            'Join us for a day full of Firebase Workshops and Pizza!',
-          ),
+          // const Divider(
+          //   height: 8,
+          //   thickness: 1,
+          //   indent: 8,
+          //   endIndent: 8,
+          //   color: Colors.grey,
+          // ),
+          // const Header("(Insert header here)"),
+          // const Paragraph(
+          //   "(Insert paragraph here)",
+          // ),
           Consumer<ApplicationState>(
             builder: (context, appState, _) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +83,37 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+          Column(
+              children: <Widget>[
+                Image.asset(
+                'assets/logo.png',
+                height: 200,
+                fit: BoxFit.fitWidth,
+                ),
+                _widgetOptions.elementAt(_selectedIndex),
+              ]
+            ),
+          
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
