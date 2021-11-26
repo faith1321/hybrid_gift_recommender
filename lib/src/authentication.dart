@@ -47,18 +47,13 @@ class Authentication extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (loginState) {
       case ApplicationLoginState.loggedOut:
-        return Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 24, bottom: 8),
-              child: StyledButton(
-                onPressed: () {
-                  startLoginFlow();
-                },
-                child: const Text('Sign in to RSVP'),
-              ),
-            ),
-          ],
+        return Center(
+          child: StyledButton(
+            onPressed: () {
+              startLoginFlow();
+            },
+            child: const Text('Sign in'),
+          ),
         );
       case ApplicationLoginState.emailAddress:
         return EmailForm(

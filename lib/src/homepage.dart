@@ -44,7 +44,32 @@ class _StatefulWidgetState extends State<HomePage> {
       // ),
       body: ListView(
         children: <Widget>[
-          const SizedBox(height: 8),
+          Consumer<ApplicationState>(
+            builder: (context, appState, _) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (appState.loginState == ApplicationLoginState.loggedIn) ...[
+                  // const Header('Discussion'),
+                  // UserBook(
+                  //   addMessage: (message) =>
+                  //       appState.addMessageToUserBook(message),
+                  //   messages: appState.userBookMessages,
+                  // ),
+                ],
+              ],
+            ),
+          ),
+          Column(
+              children: <Widget>[
+                Image.asset(
+                  'assets/logo.png',
+                  height: 200,
+                  fit: BoxFit.fitWidth,
+                ),
+                _widgetOptions.elementAt(_selectedIndex),
+              ]
+            ),
+            const SizedBox(height: 8),
           Consumer<ApplicationState>(
             builder: (context, appState, _) => Authentication(
               email: appState.email,
@@ -68,32 +93,6 @@ class _StatefulWidgetState extends State<HomePage> {
           // const Paragraph(
           //   "(Insert paragraph here)",
           // ),
-          Consumer<ApplicationState>(
-            builder: (context, appState, _) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (appState.loginState == ApplicationLoginState.loggedIn) ...[
-                  // const Header('Discussion'),
-                  // UserBook(
-                  //   addMessage: (message) =>
-                  //       appState.addMessageToUserBook(message),
-                  //   messages: appState.userBookMessages,
-                  // ),
-                ],
-              ],
-            ),
-          ),
-          Column(
-              children: <Widget>[
-                Image.asset(
-                'assets/logo.png',
-                height: 200,
-                fit: BoxFit.fitWidth,
-                ),
-                _widgetOptions.elementAt(_selectedIndex),
-              ]
-            ),
-          
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
