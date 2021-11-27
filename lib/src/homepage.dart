@@ -15,16 +15,25 @@ class _StatefulWidgetState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
+  final List<Widget> _widgetOptions = <Widget>[
+    Column(
+      children: <Widget>[
+        Image.asset(
+          'assets/logo.png',
+          height: 200,
+          fit: BoxFit.fitWidth,
+        ),
+        const Text(
+          '',
+          style: optionStyle,
+        ),
+      ],
     ),
-    Text(
+    const Text(
       'Index 1: Sth',
       style: optionStyle,
     ),
-    Text(
+    const Text(
       'Index 2: Sth 2.0',
       style: optionStyle,
     ),
@@ -59,17 +68,10 @@ class _StatefulWidgetState extends State<HomePage> {
               ],
             ),
           ),
-          Column(
-              children: <Widget>[
-                Image.asset(
-                  'assets/logo.png',
-                  height: 200,
-                  fit: BoxFit.fitWidth,
-                ),
-                _widgetOptions.elementAt(_selectedIndex),
-              ]
-            ),
-            const SizedBox(height: 8),
+          Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
+          ),
+          const SizedBox(height: 8),
           Consumer<ApplicationState>(
             builder: (context, appState, _) => Authentication(
               email: appState.email,
@@ -102,12 +104,12 @@ class _StatefulWidgetState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.list_alt),
+            label: 'Orders',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.person),
+            label: 'User',
           ),
         ],
         currentIndex: _selectedIndex,
