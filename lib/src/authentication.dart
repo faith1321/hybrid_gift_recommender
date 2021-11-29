@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hybrid_gift/src/pages.dart';
 
 import 'widgets.dart';
 
@@ -87,8 +88,9 @@ class Authentication extends StatelessWidget {
           },
         );
       case ApplicationLoginState.loggedIn:
-        return Row(
+        return Column(
           children: [
+            const Pages(),
             Center(
               child: StyledButton(
                 onPressed: () {
