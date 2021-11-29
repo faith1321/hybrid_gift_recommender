@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid_gift/src/application_state.dart';
-import 'package:hybrid_gift/src/homepage.dart';
+import 'package:hybrid_gift/src/signin.dart';
 import 'package:provider/provider.dart';
 
 
@@ -29,7 +29,7 @@ class App extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const HomePage(),
+      home: const SignIn(),
     );
   }
 }

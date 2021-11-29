@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/authentication.dart';
-import 'package:hybrid_gift/src/widgets.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _StatefulWidgetState();
+  State<SignIn> createState() => _StatefulWidgetState();
 }
 
-class _StatefulWidgetState extends State<HomePage> {
+class _StatefulWidgetState extends State<SignIn> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -48,9 +47,6 @@ class _StatefulWidgetState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Firebase Meetup'),
-      // ),
       body: ListView(
         children: <Widget>[
           Center(
@@ -69,17 +65,6 @@ class _StatefulWidgetState extends State<HomePage> {
               signOut: appState.signOut,
             ),
           ),
-          // const Divider(
-          //   height: 8,
-          //   thickness: 1,
-          //   indent: 8,
-          //   endIndent: 8,
-          //   color: Colors.grey,
-          // ),
-          // const Header("(Insert header here)"),
-          // const Paragraph(
-          //   "(Insert paragraph here)",
-          // ),
           Consumer<ApplicationState>(
             builder: (context, appState, _) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
