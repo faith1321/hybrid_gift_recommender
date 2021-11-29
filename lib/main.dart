@@ -1,32 +1,35 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/bottom_nav_bar.dart';
-import 'package:hybrid_gift/screens/home.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid_gift/src/application_state.dart';
+import 'package:hybrid_gift/src/signin.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ApplicationState(),
+      builder: (context, _) => App(),
+    ),
+  );
+}
 
-  static const String _title = 'Flutter Code Sample';
-
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(create: (context) => bottomNavBar(context, 0)),
-      ],
-      child: MaterialApp(
-        title: _title,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const MyHome(),
-        },
+    return MaterialApp(
+      title: 'Hybrid Gifts',
+      theme: ThemeData(
+        buttonTheme: Theme.of(context).buttonTheme.copyWith(
+              highlightColor: Colors.deepPurple,
+            ),
+        primarySwatch: Colors.deepPurple,
+        textTheme: GoogleFonts.robotoTextTheme(
+          Theme.of(context).textTheme,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: const SignIn(),
     );
   }
 }

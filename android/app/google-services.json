@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "412587128211",
+    "project_id": "hybrid-gifts",
+    "storage_bucket": "hybrid-gifts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412587128211:android:5fac10f461b466799d2466",
+        "android_client_info": {
+          "package_name": "com.project.hybrid_gifts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412587128211-85rddj41ltusav8c28i9c0lca6kihhup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0wi6sEWHPurRCnc2JobSf_cZ2-j9YiSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412587128211-85rddj41ltusav8c28i9c0lca6kihhup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
