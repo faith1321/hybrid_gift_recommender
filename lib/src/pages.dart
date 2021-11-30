@@ -11,22 +11,9 @@ class Pages extends StatefulWidget {
 class _PagesState extends State<Pages> {
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _widgetOptions = <Widget>[
-    Column(
-      children: <Widget>[
-        Image.asset(
-          'assets/logo.png',
-          height: 200,
-          fit: BoxFit.fitWidth,
-        ),
-        const Text(
-          '',
-          style: optionStyle,
-        ),
-      ],
-    ),
+    Catalogue(),
     const Text(
       'Index 1: Sth',
       style: optionStyle,
@@ -46,8 +33,12 @@ class _PagesState extends State<Pages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Catalogue(),
-
+      body: Center(
+        child: LimitedBox(
+          maxHeight: MediaQuery.of(context).size.height,
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
