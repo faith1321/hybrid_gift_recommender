@@ -43,6 +43,9 @@ class Authentication extends StatelessWidget {
   ) registerAccount;
   final void Function() signOut;
 
+  static const TextStyle optionStyle =
+    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   @override
   Widget build(BuildContext context) {
     switch (loginState) {
@@ -87,17 +90,28 @@ class Authentication extends StatelessWidget {
           },
         );
       case ApplicationLoginState.loggedIn:
-        return Row(
+        return Column(
           children: [
-            Center(
-              child: StyledButton(
-                onPressed: () {
-                  signOut();
-                },
-                child: const Text('Logout'),
-              ),
+            Column(
+              children: <Widget>[
+                Image.asset(
+                  'assets/logo.png',
+                  height: 200,
+                  fit: BoxFit.fitWidth,
+                ),
+                const Text(
+                  '',
+                  style: optionStyle,
+                ),
+                StyledButton(
+                  onPressed: () {
+                    signOut();
+                  },
+                  child: const Text('Logout'),
+                ),
+              ], 
             ),
-          ],
+            ],
         );
       default:
         return Row(
