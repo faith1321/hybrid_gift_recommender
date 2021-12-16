@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hybrid_gift/src/application_state.dart';
-import 'package:hybrid_gift/src/signin.dart';
+import 'package:hybrid_gift/src/authentication.dart';
 import 'package:provider/provider.dart';
 
 
@@ -29,7 +29,19 @@ class App extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const SignIn(),
+      // home: const SignIn(),
+      home: Consumer<ApplicationState>(
+        builder: (context, appState, _) => Authentication(
+          email: appState.email,
+          loginState: appState.loginState,
+          startLoginFlow: appState.startLoginFlow,
+          verifyEmail: appState.verifyEmail,
+          signInWithEmailAndPassword: appState.signInWithEmailAndPassword,
+          cancelRegistration: appState.cancelRegistration,
+          registerAccount: appState.registerAccount,
+          signOut: appState.signOut,
+        ),
+      ),
     );
   }
 }
