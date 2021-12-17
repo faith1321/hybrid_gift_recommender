@@ -16,12 +16,6 @@ class _PagesState extends State<Pages> {
   int _selectedIndex = 0;
   bool _visibilityLogOut = false;
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const Text("Home"),
-    const Text("Orders"),
-    const Text("Hi"),
-  ];
-
   void _onNavBarItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -43,7 +37,6 @@ class _PagesState extends State<Pages> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // _visibilityLogOut ? UserPage(anotherSignOut: widget.signOut) : Container(),
             if (_visibilityLogOut)
               UserPage(anotherSignOut: widget.signOut)
             else if (_selectedIndex == 0)
