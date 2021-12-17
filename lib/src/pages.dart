@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/src/widgets.dart';
+import 'package:hybrid_gift/src/user_page.dart';
 
 class Pages extends StatefulWidget {
   const Pages({Key? key, required this.signOut}) : super(key: key);
@@ -14,10 +14,10 @@ class _PagesState extends State<Pages> {
   int _selectedIndex = 0;
   bool _visibilityLogOut = false;
 
-  static final List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     const Text("Home"),
     const Text("Orders"),
-    const Text("User"),
+    const Text("Hi"),
   ];
 
   void _onNavBarItemTapped(int index) {
@@ -41,13 +41,8 @@ class _PagesState extends State<Pages> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            _visibilityLogOut ? UserPage(anotherSignOut: widget.signOut) : Container(),
             _widgetOptions.elementAt(_selectedIndex),
-            _visibilityLogOut ? StyledButton(
-              onPressed: () {
-                widget.signOut();
-              },
-              child: const Text('Logout'),
-            ) : Container(),
           ],
         ),
       ),
