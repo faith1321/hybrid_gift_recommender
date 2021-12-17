@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hybrid_gift/src/home_page.dart';
+import 'package:hybrid_gift/src/order_page.dart';
 import 'package:hybrid_gift/src/user_page.dart';
 
 class Pages extends StatefulWidget {
@@ -24,7 +26,7 @@ class _PagesState extends State<Pages> {
     setState(() {
       _selectedIndex = index;
     });
-    index==2 ? _onLogOutTapped(true) : _onLogOutTapped(false);
+    index == 2 ? _onLogOutTapped(true) : _onLogOutTapped(false);
   }
 
   void _onLogOutTapped(bool vis) {
@@ -41,8 +43,14 @@ class _PagesState extends State<Pages> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _visibilityLogOut ? UserPage(anotherSignOut: widget.signOut) : Container(),
-            _widgetOptions.elementAt(_selectedIndex),
+            // _visibilityLogOut ? UserPage(anotherSignOut: widget.signOut) : Container(),
+            if (_visibilityLogOut)
+              UserPage(anotherSignOut: widget.signOut)
+            else if (_selectedIndex == 0)
+              const HomePage()
+            else if (_selectedIndex == 1)
+              const OrderPage()
+            else Container(),
           ],
         ),
       ),
