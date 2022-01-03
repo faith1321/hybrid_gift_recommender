@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/src/home_page.dart';
-import 'package:hybrid_gift/src/order_page.dart';
+import 'package:hybrid_gift/constants.dart';
+import 'package:hybrid_gift/screens/home/home_page.dart';
+import 'package:hybrid_gift/screens/order/order_page.dart';
 import 'package:hybrid_gift/src/user_page.dart';
 
 class Pages extends StatefulWidget {
@@ -32,6 +33,7 @@ class _PagesState extends State<Pages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: buildAppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +42,7 @@ class _PagesState extends State<Pages> {
             if (_visibilityLogOut)
               UserPage(anotherSignOut: widget.signOut)
             else if (_selectedIndex == 0)
-              const HomePage()
+              const Expanded(child: HomePage())
             else if (_selectedIndex == 1)
               const OrderPage()
             else Container(),
@@ -67,6 +69,34 @@ class _PagesState extends State<Pages> {
         onTap: _onNavBarItemTapped,
         type: BottomNavigationBarType.fixed,
       ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () {},
+      ),
+      actions: <Widget>[
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.search,
+              color: kTextColor,
+            )),
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.shopping_bag,
+              color: kTextColor,
+            )),
+        const SizedBox(
+          width: kDefaultPaddin / 2,
+        )
+      ],
     );
   }
 }

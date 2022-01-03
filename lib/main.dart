@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/authentication.dart';
 import 'package:provider/provider.dart';
@@ -21,15 +22,14 @@ class App extends StatelessWidget {
       title: 'Hybrid Gifts',
       theme: ThemeData(
         buttonTheme: Theme.of(context).buttonTheme.copyWith(
-              highlightColor: Colors.deepPurple,
-            ),
+          highlightColor: kTextColor,
+        ),
         primarySwatch: Colors.deepPurple,
         textTheme: GoogleFonts.robotoTextTheme(
           Theme.of(context).textTheme,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: const SignIn(),
       home: Consumer<ApplicationState>(
         builder: (context, appState, _) => Authentication(
           email: appState.email,
