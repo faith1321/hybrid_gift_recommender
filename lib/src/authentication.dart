@@ -102,7 +102,7 @@ class Authentication extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               height: 200,
               fit: BoxFit.fitWidth,
             ),

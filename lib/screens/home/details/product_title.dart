@@ -26,12 +26,32 @@ class ProductTitle extends StatelessWidget {
                 .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: kDefaultPaddin),
-          Expanded(
+          Row(
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(text: "Price\n"),
+                    TextSpan(
+                      text: "\$${product.price}",
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      )
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(width: kDefaultPaddin),
+          FittedBox(
+            alignment: Alignment.bottomRight,
             child: Hero(
               tag: "${product.id}",
               child: Image.asset(
                 product.image,
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
               ),
             ),
           )
