@@ -29,7 +29,9 @@ class App extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const SignIn(),
+      home: const Center(
+        child: SignIn(),
+      ),
     );
   }
 }
