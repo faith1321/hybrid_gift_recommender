@@ -45,7 +45,8 @@ class _PagesState extends State<Pages> {
               const Expanded(child: HomePage())
             else if (_selectedIndex == 1)
               const OrderPage()
-            else Container(),
+            else
+              Container(),
           ],
         ),
       ),

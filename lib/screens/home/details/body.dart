@@ -25,9 +25,9 @@ class Body extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: size.height*0.3),
+                  margin: EdgeInsets.only(top: size.height * 0.3),
                   padding: EdgeInsets.only(
-                    top: size.height* 0.12,
+                    top: size.height * 0.12,
                     left: kDefaultPaddin,
                     right: kDefaultPaddin,
                   ),
@@ -41,11 +41,11 @@ class Body extends StatelessWidget {
                   child: Column(
                     children: [
                       ColorAndSize(product: product),
-                      const SizedBox(height: kDefaultPaddin/2),
+                      const SizedBox(height: kDefaultPaddin / 2),
                       Description(product: product),
-                      const SizedBox(height: kDefaultPaddin/2),
+                      const SizedBox(height: kDefaultPaddin / 2),
                       const Counter(),
-                      const SizedBox(height: kDefaultPaddin/2),
+                      const SizedBox(height: kDefaultPaddin / 2),
                       AddCart(product: product),
                     ],
                   ),

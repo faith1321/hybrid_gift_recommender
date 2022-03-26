@@ -3,7 +3,8 @@ import 'package:hybrid_gift/src/pages.dart';
 import 'package:hybrid_gift/src/widgets.dart';
 
 class UserPage extends Pages {
-  const UserPage({Key? key, required this.anotherSignOut}) : super(key: key, signOut: anotherSignOut);
+  const UserPage({Key? key, required this.anotherSignOut})
+      : super(key: key, signOut: anotherSignOut);
 
   final void Function() anotherSignOut;
 

@@ -4,7 +4,7 @@ import 'package:hybrid_gift/models/products.dart';
 
 class AddCart extends StatelessWidget {
   final Product product;
-  
+
   const AddCart({Key? key, required this.product}) : super(key: key);
 
   @override

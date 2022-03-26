@@ -37,7 +37,10 @@ class ColorAndSize extends StatelessWidget {
                 const TextSpan(text: "Size\n"),
                 TextSpan(
                   text: "${product.size} cm",
-                  style: Theme.of(context).textTheme.headline5!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

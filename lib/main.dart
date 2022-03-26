@@ -5,7 +5,9 @@ import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/authentication.dart';
 import 'package:provider/provider.dart';
 
-
+/// The main function that runs the app.
+///
+/// Instantiates [ApplicationState] and [App].
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -22,8 +24,8 @@ class App extends StatelessWidget {
       title: 'Hybrid Gifts',
       theme: ThemeData(
         buttonTheme: Theme.of(context).buttonTheme.copyWith(
-          highlightColor: kTextColor,
-        ),
+              highlightColor: kTextColor,
+            ),
         primarySwatch: Colors.deepPurple,
         textTheme: GoogleFonts.robotoTextTheme(
           Theme.of(context).textTheme,

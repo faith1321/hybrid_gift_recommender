@@ -96,30 +96,29 @@ class Authentication extends StatelessWidget {
 
   Scaffold loginProcedure() {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 200,
-              fit: BoxFit.fitWidth,
-            ),
-            const Text(
-              '',
-              style: optionStyle,
-            ),
-            StyledButton(
-              onPressed: () {
-                startLoginFlow();
-              },
-              child: const Text('Sign in'),
-            ),
-          ],
-        ),
-      )
-    );
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/images/logo.png',
+            height: 200,
+            fit: BoxFit.fitWidth,
+          ),
+          const Text(
+            '',
+            style: optionStyle,
+          ),
+          StyledButton(
+            onPressed: () {
+              startLoginFlow();
+            },
+            child: const Text('Sign in'),
+          ),
+        ],
+      ),
+    ));
   }
 
   void _showErrorDialog(BuildContext context, String title, Exception e) {

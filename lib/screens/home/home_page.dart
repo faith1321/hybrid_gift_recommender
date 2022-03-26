@@ -18,7 +18,10 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
           child: Text(
             "Women",
-            style: Theme.of(context).textTheme.headline5!.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         const Categories(),

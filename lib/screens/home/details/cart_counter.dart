@@ -32,16 +32,16 @@ class _CartCounterState extends State<CartCounter> {
           ),
         ),
         buildOutlineButton(
-          icon: Icons.add,
-          press: () {
-            setState(() {
-              numOfItems++;
-            });
-          }
-        ),
+            icon: Icons.add,
+            press: () {
+              setState(() {
+                numOfItems++;
+              });
+            }),
       ],
     );
   }
+
   SizedBox buildOutlineButton({required IconData icon, Function()? press}) {
     return SizedBox(
       height: 32,

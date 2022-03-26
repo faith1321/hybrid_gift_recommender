@@ -17,7 +17,7 @@ class Counter extends StatelessWidget {
           width: 32,
           decoration: const BoxDecoration(
             color: Color(0xFFFF6464),
-            shape: BoxShape.circle, 
+            shape: BoxShape.circle,
           ),
           child: const Icon(CupertinoIcons.heart),
         )
