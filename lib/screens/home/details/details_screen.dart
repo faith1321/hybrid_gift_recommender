@@ -14,6 +14,9 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBar = const Text('Catalogue');
+
   @override
   DetailsScreen get widget => super.widget;
 
@@ -37,10 +40,39 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       actions: [
         IconButton(
-            onPressed: () {
-              setState(() {});
-            },
-            icon: const Icon(Icons.search)),
+          onPressed: () {
+            setState(() {
+              if (customIcon.icon == Icons.search) {
+                customIcon = const Icon(Icons.cancel);
+                customSearchBar = const ListTile(
+                  leading: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                  title: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Type in a product...",
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              } else {
+                customIcon = const Icon(Icons.search);
+                customSearchBar = const Text("Catalogue");
+              }
+            });
+          },
+          icon: customIcon,
+        ),
         IconButton(
             onPressed: () {
               setState(() {});

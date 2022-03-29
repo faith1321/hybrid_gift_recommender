@@ -16,6 +16,11 @@ class Pages extends StatefulWidget {
 class _PagesState extends State<Pages> {
   int _selectedIndex = 0;
   bool _visibilityLogOut = false;
+  Icon customIcon = const Icon(
+    Icons.search,
+    color: kTextColor,
+  );
+  Widget customSearchBar = const Text('Catalogue');
 
   void _onNavBarItemTapped(int index) {
     setState(() {
@@ -79,15 +84,50 @@ class _PagesState extends State<Pages> {
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        color: Colors.white,
         onPressed: () {},
       ),
       actions: <Widget>[
         IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              color: kTextColor,
-            )),
+          onPressed: () {
+            setState(() {
+              if (customIcon.icon == Icons.search) {
+                customIcon = const Icon(
+                  Icons.cancel,
+                  color: kTextColor,
+                );
+                customSearchBar = const ListTile(
+                  leading: Icon(
+                    Icons.search,
+                    color: kTextColor,
+                    size: 28,
+                  ),
+                  title: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Type in a product...",
+                      hintStyle: TextStyle(
+                        color: kTextColor,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(
+                      color: kTextColor,
+                    ),
+                  ),
+                );
+              } else {
+                customIcon = const Icon(
+                  Icons.search,
+                  color: kTextColor,
+                );
+                customSearchBar = const Text("Catalogue");
+              }
+            });
+          },
+          icon: customIcon,
+        ),
         IconButton(
             onPressed: () {},
             icon: const Icon(
