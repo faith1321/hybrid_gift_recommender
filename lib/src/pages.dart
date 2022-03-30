@@ -82,11 +82,7 @@ class _PagesState extends State<Pages> {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new_rounded),
-        color: Colors.white,
-        onPressed: () {},
-      ),
+      title: customSearchBar,
       actions: <Widget>[
         IconButton(
           onPressed: () {
@@ -104,10 +100,10 @@ class _PagesState extends State<Pages> {
                   ),
                   title: TextField(
                     decoration: InputDecoration(
-                      hintText: "Type in a product...",
+                      hintText: "Search a product",
                       hintStyle: TextStyle(
                         color: kTextColor,
-                        fontSize: 18,
+                        fontSize: 14,
                         fontStyle: FontStyle.italic,
                       ),
                       border: InputBorder.none,

@@ -15,7 +15,7 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   Icon customIcon = const Icon(Icons.search);
-  Widget customSearchBar = const Text('Catalogue');
+  Widget customSearchBar = const Text("");
 
   @override
   DetailsScreen get widget => super.widget;
@@ -33,6 +33,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return AppBar(
       backgroundColor: widget.product.color,
       elevation: 0,
+      title: customSearchBar,
       leading: IconButton(
         icon: const Icon(CupertinoIcons.back),
         color: Colors.white,
@@ -52,10 +53,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                   title: TextField(
                     decoration: InputDecoration(
-                      hintText: "Type in a product...",
+                      hintText: "Search a product",
                       hintStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 14,
                         fontStyle: FontStyle.italic,
                       ),
                       border: InputBorder.none,
@@ -67,7 +68,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 );
               } else {
                 customIcon = const Icon(Icons.search);
-                customSearchBar = const Text("Catalogue");
+                customSearchBar = const Text("");
               }
             });
           },
