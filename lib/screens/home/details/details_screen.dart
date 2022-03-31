@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 import 'package:hybrid_gift/screens/home/details/body.dart';
+import 'package:hybrid_gift/search_bar.dart';
 
 /// Creates the item details screen.
 
@@ -43,43 +44,45 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       actions: [
         // Search Function
-        IconButton(
-          onPressed: () {
-            setState(() {
-              // Displays the search bar if not shown.
-              if (customIcon.icon == Icons.search) {
-                customIcon = const Icon(Icons.cancel);
-                customSearchBar = const ListTile(
-                  leading: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                  title: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search a product",
-                      hintStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                      ),
-                      border: InputBorder.none,
-                    ),
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-              }
-              // Hides search bar if shown.
-              else {
-                customIcon = const Icon(Icons.search);
-                customSearchBar = const Text("");
-              }
-            });
-          },
-          icon: customIcon,
-        ),
+        const SearchBar(type: "details"),
+
+        // IconButton(
+        //   onPressed: () {
+        //     setState(() {
+        //       // Displays the search bar if not shown.
+        //       if (customIcon.icon == Icons.search) {
+        //         customIcon = const Icon(Icons.cancel);
+        //         customSearchBar = const ListTile(
+        //           leading: Icon(
+        //             Icons.search,
+        //             color: Colors.white,
+        //             size: 28,
+        //           ),
+        //           title: TextField(
+        //             decoration: InputDecoration(
+        //               hintText: "Search a product",
+        //               hintStyle: TextStyle(
+        //                 color: Colors.white,
+        //                 fontSize: 14,
+        //                 fontStyle: FontStyle.italic,
+        //               ),
+        //               border: InputBorder.none,
+        //             ),
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         );
+        //       }
+        //       // Hides search bar if shown.
+        //       else {
+        //         customIcon = const Icon(Icons.search);
+        //         customSearchBar = const Text("");
+        //       }
+        //     });
+        //   },
+        //   icon: customIcon,
+        // ),
         // Shopping Bag Function
         IconButton(
             onPressed: () {
