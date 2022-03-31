@@ -4,6 +4,8 @@ import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 import 'package:hybrid_gift/screens/home/details/body.dart';
 
+/// Creates the item details screen.
+
 class DetailsScreen extends StatefulWidget {
   final Product product;
 
@@ -40,9 +42,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
         onPressed: () => Navigator.pop(context),
       ),
       actions: [
+        // Search Function
         IconButton(
           onPressed: () {
             setState(() {
+              // Displays the search bar if not shown.
               if (customIcon.icon == Icons.search) {
                 customIcon = const Icon(Icons.cancel);
                 customSearchBar = const ListTile(
@@ -66,7 +70,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   ),
                 );
-              } else {
+              }
+              // Hides search bar if shown.
+              else {
                 customIcon = const Icon(Icons.search);
                 customSearchBar = const Text("");
               }
@@ -74,6 +80,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           },
           icon: customIcon,
         ),
+        // Shopping Bag Function
         IconButton(
             onPressed: () {
               setState(() {});

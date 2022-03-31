@@ -3,6 +3,9 @@ import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/screens/home/home_page.dart';
 import 'package:hybrid_gift/screens/order/order_page.dart';
 import 'package:hybrid_gift/src/user_page.dart';
+import 'package:textfield_search/textfield_search.dart';
+
+/// Creates the main app interface after login.
 
 class Pages extends StatefulWidget {
   const Pages({Key? key, required this.signOut}) : super(key: key);
@@ -14,6 +17,7 @@ class Pages extends StatefulWidget {
 }
 
 class _PagesState extends State<Pages> {
+  /// Sets the default landing page, where 0 is the homepage.
   int _selectedIndex = 0;
   bool _visibilityLogOut = false;
   Icon customIcon = const Icon(
@@ -22,6 +26,12 @@ class _PagesState extends State<Pages> {
   );
   Widget customSearchBar = const Text('Catalogue');
 
+  var myController = TextEditingController();
+
+  /// Sets the conditions to switch between the different pages.
+  ///
+  /// Sets the given [index] as the current page index.
+  /// Calls [_onLogOutTapped] if the current page is the User Page (Page 2).
   void _onNavBarItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -29,10 +39,32 @@ class _PagesState extends State<Pages> {
     index == 2 ? _onLogOutTapped(true) : _onLogOutTapped(false);
   }
 
+  /// Controls the login status of the user.
+  ///
+  /// Changes [_visibilityLogOut] according to [vis].
   void _onLogOutTapped(bool vis) {
     setState(() {
       _visibilityLogOut = vis;
     });
+  }
+
+  @override
+  void dispose() {
+    // Cleans up controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Start listening to changes.
+    myController.addListener(_printLatestValue);
+  }
+
+  void _printLatestValue() {
+    print("Text Field Value: ${myController.text}");
   }
 
   @override
@@ -44,8 +76,11 @@ class _PagesState extends State<Pages> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Triggers sign out process if [_visibilityLogOut] is true.
             if (_visibilityLogOut)
               UserPage(anotherSignOut: widget.signOut)
+
+            // Otherwise, change to the selected page.
             else if (_selectedIndex == 0)
               const Expanded(child: HomePage())
             else if (_selectedIndex == 1)
@@ -84,22 +119,26 @@ class _PagesState extends State<Pages> {
       elevation: 0,
       title: customSearchBar,
       actions: <Widget>[
+        // Search Function
         IconButton(
           onPressed: () {
             setState(() {
+              // Displays the search bar if not shown.
               if (customIcon.icon == Icons.search) {
                 customIcon = const Icon(
                   Icons.cancel,
                   color: kTextColor,
                 );
-                customSearchBar = const ListTile(
-                  leading: Icon(
+                customSearchBar = ListTile(
+                  leading: const Icon(
                     Icons.search,
                     color: kTextColor,
                     size: 28,
                   ),
-                  title: TextField(
-                    decoration: InputDecoration(
+                  title: TextFieldSearch(
+                    label: "Label",
+                    controller: myController,
+                    decoration: const InputDecoration(
                       hintText: "Search a product",
                       hintStyle: TextStyle(
                         color: kTextColor,
@@ -108,12 +147,14 @@ class _PagesState extends State<Pages> {
                       ),
                       border: InputBorder.none,
                     ),
-                    style: TextStyle(
-                      color: kTextColor,
-                    ),
+                    // style: const TextStyle(
+                    //   color: kTextColor,
+                    // ),
                   ),
                 );
-              } else {
+              }
+              // Hides search bar if shown.
+              else {
                 customIcon = const Icon(
                   Icons.search,
                   color: kTextColor,
@@ -124,6 +165,7 @@ class _PagesState extends State<Pages> {
           },
           icon: customIcon,
         ),
+        // Shopping Bag Function
         IconButton(
             onPressed: () {},
             icon: const Icon(
