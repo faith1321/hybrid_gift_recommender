@@ -11,11 +11,10 @@ title = list()
 ds = tfds.load(
     'amazon_us_reviews/Personal_Care_Appliances_v1_00', split="train")
 
-for k in range(10):
-    tools1 = ds.map(lambda x: x["data"])
-    product = tools1.map(lambda x: {
-        "product_title": x["product_title"],
-    })
+tools1 = ds.map(lambda x: x["data"])
+product = tools1.map(lambda x: {
+    "Product Title": x["product_title"],
+})
 
 product = tfds.as_numpy(product)
 for x, sample in enumerate(product):
@@ -23,6 +22,8 @@ for x, sample in enumerate(product):
 
 df = pd.DataFrame(title)
 
-df = df["product_title"].str.decode("utf-8")
+df = df["Product Title"].str.decode("utf-8")
 
-df.to_csv("assets/product_title.csv")
+print(df)
+
+df.to_csv("assets/product_title.csv", index=False)

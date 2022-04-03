@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
           child: Text(
-            "Women",
+            "Items",
             style: Theme.of(context)
                 .textTheme
                 .headline5!

@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/screens/home/home_page.dart';
 import 'package:hybrid_gift/screens/order/order_page.dart';
 import 'package:hybrid_gift/search_bar.dart';
 import 'package:hybrid_gift/src/user_page.dart';
+import 'package:textfield_search/textfield_search.dart';
 
 /// Creates the main app interface after login.
 
@@ -20,7 +26,16 @@ class _PagesState extends State<Pages> {
   /// Sets the default landing page, where 0 is the homepage.
   int _selectedIndex = 0;
   bool _visibilityLogOut = false;
-  Widget customSearchBar = const Text('Catalogue');
+  Widget customSearchBar = const Text("");
+  final Color _color = kTextColor;
+
+  Icon customIcon = const Icon(
+    Icons.search,
+    color: kTextColor,
+  );
+  late TextEditingController myController;
+  List<List<dynamic>> data = [];
+  bool isShowSearchBar = false;
 
   /// Sets the conditions to switch between the different pages.
   ///
@@ -40,6 +55,24 @@ class _PagesState extends State<Pages> {
     setState(() {
       _visibilityLogOut = vis;
     });
+  }
+
+  /// Loads the csv into a list.
+  Future<List> _loadCSV() async {
+    final _rawData = await rootBundle.loadString("assets/product_title.csv");
+    List<List<dynamic>> _listData =
+        const CsvToListConverter().convert<dynamic>(_rawData, eol: "\n");
+    setState(() {
+      data = _listData;
+    });
+    print(data);
+    return data;
+  }
+
+  @override
+  void initState() {
+    myController = TextEditingController();
+    super.initState();
   }
 
   @override
@@ -81,7 +114,7 @@ class _PagesState extends State<Pages> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        // selectedItemColor: Color.fromARGB(255, 42, 148, 100),
         onTap: _onNavBarItemTapped,
         type: BottomNavigationBarType.fixed,
       ),
@@ -95,7 +128,50 @@ class _PagesState extends State<Pages> {
       title: customSearchBar,
       actions: <Widget>[
         // Search Function
-        const SearchBar(type: "pages"),
+        // const SearchBar(type: "pages"),
+        IconButton(
+          onPressed: () {
+            _loadCSV();
+            setState(() {
+              // Displays the search bar if not shown.
+              if (customIcon.icon == Icons.search) {
+                isShowSearchBar = true;
+                customIcon = Icon(
+                  Icons.cancel,
+                  color: _color,
+                );
+                customSearchBar = ListTile(
+                    leading: Icon(
+                      Icons.search,
+                      color: _color,
+                      size: 28,
+                    ),
+                    title: TextFieldSearch(
+                        initialList: data,
+                        label: "Catalogue",
+                        controller: myController,
+                        decoration: InputDecoration(
+                          hintText: "Search a product",
+                          hintStyle: TextStyle(
+                            color: _color,
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          border: InputBorder.none,
+                        )));
+              }
+              // Hides search bar if shown.
+              else {
+                isShowSearchBar = false;
+                customIcon = Icon(
+                  Icons.search,
+                  color: _color,
+                );
+              }
+            });
+          },
+          icon: customIcon,
+        ),
 
         // Shopping Bag Function
         IconButton(

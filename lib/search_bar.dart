@@ -62,23 +62,12 @@ class _SearchBarState extends State<SearchBar> {
                 color: _color,
                 size: 28,
               ),
-              // title: TextFieldSearch(
-              //   label: "Label",
-              //   controller: myController,
-              //   decoration: InputDecoration(
-              //     hintText: "Search a product",
-              //     hintStyle: TextStyle(
-              //       color: _color,
-              //       fontSize: 14,
-              //       fontStyle: FontStyle.italic,
-              //     ),
-              //     border: InputBorder.none,
-              //   ),
-              //   // style: const TextStyle(
-              //   //   color: kTextColor,
-              //   // ),
-              // ),
-              title: TextField(
+              title: TextFieldSearch(
+                label: "Catalogue",
+                controller: myController,
+                future: () {
+                  return _loadCSV();
+                },
                 decoration: InputDecoration(
                   hintText: "Search a product",
                   hintStyle: TextStyle(
@@ -88,10 +77,24 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                   border: InputBorder.none,
                 ),
-                style: TextStyle(
-                  color: _color,
-                ),
+                // style: const TextStyle(
+                //   color: kTextColor,
+                // ),
               ),
+              // title: TextField(
+              //   decoration: InputDecoration(
+              //     hintText: "Search a product",
+              //     hintStyle: TextStyle(
+              //       color: _color,
+              //       fontSize: 14,
+              //       fontStyle: FontStyle.italic,
+              //     ),
+              //     border: InputBorder.none,
+              //   ),
+              //   style: TextStyle(
+              //     color: _color,
+              //   ),
+              // ),
             );
           }
           // Hides search bar if shown.
