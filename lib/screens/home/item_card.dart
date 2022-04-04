@@ -33,10 +33,11 @@ class ItemCard extends StatelessWidget {
             child: Text(
               product.title,
               style: const TextStyle(color: kTextLightColor),
+              softWrap: false,
             ),
           ),
           Text(
-            "\$${product.price}",
+            "£${product.price}",
             style: const TextStyle(color: kTextLightColor),
           ),
         ],

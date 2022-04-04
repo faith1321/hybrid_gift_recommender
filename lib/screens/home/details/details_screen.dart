@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
-import 'package:hybrid_gift/screens/home/details/body.dart';
+import 'package:hybrid_gift/screens/home/details/details_body.dart';
 import 'package:hybrid_gift/search_bar.dart';
 
 /// Creates the item details screen.
@@ -28,7 +28,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       backgroundColor: widget.product.color,
       appBar: buildAppBar(context),
-      body: Body(product: widget.product),
+      body: DetailsBody(product: widget.product),
     );
   }
 
