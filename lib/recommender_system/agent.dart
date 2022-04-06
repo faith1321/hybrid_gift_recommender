@@ -12,7 +12,6 @@ class Agent {
 
   void _loadModel() async {
     _interpreter = await Interpreter.fromAsset(_modelFile);
-    assert(_interpreter != null);
   }
 
   List predict(String itemID) {

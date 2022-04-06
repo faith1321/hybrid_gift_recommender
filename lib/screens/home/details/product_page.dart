@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 
-class ProductTitle extends StatelessWidget {
+class ProductPage extends StatelessWidget {
   final Product product;
 
-  const ProductTitle({Key? key, required this.product}) : super(key: key);
+  const ProductPage({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class ProductTitle extends StatelessWidget {
                   children: [
                     const TextSpan(text: "Price\n"),
                     TextSpan(
-                        text: "\$${product.price}",
+                        text: "£${product.price}",
                         style: Theme.of(context).textTheme.headline4!.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

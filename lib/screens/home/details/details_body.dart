@@ -3,12 +3,13 @@ import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 
 import '../item_card.dart';
+import '../item_list.dart';
 import 'add_cart.dart';
 import 'color_and_size.dart';
 import 'counter.dart';
 import 'description.dart';
 import 'details_screen.dart';
-import 'product_title.dart';
+import 'product_page.dart';
 
 class DetailsBody extends StatelessWidget {
   final Product product;
@@ -23,7 +24,7 @@ class DetailsBody extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: size.height,
+            height: size.height * 1.3,
             child: Stack(
               children: [
                 Container(
@@ -54,17 +55,9 @@ class DetailsBody extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: kDefaultPaddin),
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            itemCount: products.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: kDefaultPaddin,
-                              crossAxisSpacing: kDefaultPaddin,
-                              childAspectRatio: 0.75,
-                            ),
-                            itemBuilder: (context, index) => ItemCard(
+                          child: ListView.builder(
+                            itemCount: 3,
+                            itemBuilder: (context, index) => ItemList(
                               product: products[index],
                               press: () => Navigator.push<MaterialPageRoute>(
                                 context,
@@ -81,7 +74,7 @@ class DetailsBody extends StatelessWidget {
                     ],
                   ),
                 ),
-                ProductTitle(product: product),
+                ProductPage(product: product),
               ],
             ),
           )
