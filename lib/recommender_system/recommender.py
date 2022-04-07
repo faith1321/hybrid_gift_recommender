@@ -160,7 +160,7 @@ model.compile(optimizer=tf.keras.optimizers.Adagrad(
 cachedTrain = train.shuffle(10_000).batch(8192).cache()
 cachedTest = test.batch(4096).cache()
 
-model.fit(cachedTrain, epochs=10, callbacks=[earlystopping])
+model.fit(cachedTrain, epochs=100, callbacks=[earlystopping])
 # model.fit(cachedTrain, epochs=10)
 metrics = model.evaluate(cachedTest, return_dict=True)
 
