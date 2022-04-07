@@ -179,21 +179,21 @@ saved_model = tf.saved_model.save(model, tflite_model_dir)
 converter = tf.lite.TFLiteConverter.from_saved_model(tflite_model_dir)
 tflite_model = converter.convert()
 
-# Save the model.
-with open('model.tflite', 'wb') as f:
-    f.write(tflite_model)
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-converter.target_spec.supported_ops = [
-    tf.lite.OpsSet.TFLITE_BUILTINS,  # enable TensorFlow Lite ops.
-    tf.lite.OpsSet.SELECT_TF_OPS  # enable TensorFlow ops.
-]
+# # Save the model.
+# with open('model.tflite', 'wb') as f:
+#     f.write(tflite_model)
+# converter = tf.lite.TFLiteConverter.from_keras_model(model)
+# converter.target_spec.supported_ops = [
+#     tf.lite.OpsSet.TFLITE_BUILTINS,  # enable TensorFlow Lite ops.
+#     tf.lite.OpsSet.SELECT_TF_OPS  # enable TensorFlow ops.
+# ]
 
-converter.optimizations = [tf.lite.Optimize.DEFAULT]
-converter.target_spec.supported_types = [tf.float16]
+# converter.optimizations = [tf.lite.Optimize.DEFAULT]
+# converter.target_spec.supported_types = [tf.float16]
 
-tflite_f16_model = converter.convert()
-tflite_f16_file = tflite_model_dir/"recommender_f16.tflite"
-tflite_f16_file.write_bytes(tflite_f16_model)
+# tflite_f16_model = converter.convert()
+# tflite_f16_file = tflite_model_dir/"recommender_f16.tflite"
+# tflite_f16_file.write_bytes(tflite_f16_model)
 
 # Retrieving Top-K Candidates
 # Dummy values created to simulate larger dataset
