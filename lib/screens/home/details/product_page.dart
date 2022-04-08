@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
@@ -18,12 +19,17 @@ class ProductPage extends StatelessWidget {
             "Personal Items",
             style: TextStyle(color: Colors.white),
           ),
-          Text(
-            product.title,
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          SizedBox(
+            height: kDefaultPaddin * 5,
+            width: MediaQuery.of(context).size.width,
+            child: AutoSizeText(
+              product.title,
+              textAlign: TextAlign.left,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline4!
+                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
           const SizedBox(height: kDefaultPaddin),
           Row(

@@ -5,7 +5,7 @@ import numpy as np
 import csv
 from pprint import pprint
 
-title = list()
+data = list()
 
 # Load dataset
 ds = tfds.load(
@@ -13,16 +13,18 @@ ds = tfds.load(
 
 tools1 = ds.map(lambda x: x["data"])
 product = tools1.map(lambda x: {
+    "Product ID": x["product_id"],
     "Product Title": x["product_title"],
 })
 
 product = tfds.as_numpy(product)
 for x, sample in enumerate(product):
-    title.append(sample)
+    data.append(sample)
 
-df = pd.DataFrame(title)
+df = pd.DataFrame(data)
 
-df = df["Product Title"].str.decode("utf-8")
+df["Product ID"] = df["Product ID"].str.decode("utf-8")
+df["Product Title"] = df["Product Title"].str.decode("utf-8")
 
 print(df)
 

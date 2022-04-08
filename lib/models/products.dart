@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:random_color/random_color.dart';
 
 class Product {
-  final String image, title, description;
-  final int price, size, id;
+  final String image, title, description, id;
+  final int price, size;
   final Color color;
 
   Product({
@@ -22,7 +22,7 @@ class Product {
 
 List<Product> products = [
   Product(
-      id: 1,
+      id: "B00847JQZ6",
       title: "SE - Reading Glass - Spring Loaded Hinges, 4.0x - RTS62400",
       price: 234,
       size: 12,
@@ -31,7 +31,7 @@ List<Product> products = [
       color: RandomColor()
           .randomColor(colorSaturation: ColorSaturation.lowSaturation)),
   Product(
-      id: 2,
+      id: "B00N5HD340",
       title: "Straight Razor",
       price: 124,
       size: 8,
@@ -40,7 +40,7 @@ List<Product> products = [
       color: RandomColor()
           .randomColor(colorSaturation: ColorSaturation.lowSaturation)),
   Product(
-      id: 3,
+      id: "B0077L1X24",
       title:
           "Philips Sonicare Flexcare & Healthy White Plastic Travel Handle Case New Bulk Package",
       price: 4,
@@ -50,7 +50,7 @@ List<Product> products = [
       color: RandomColor()
           .randomColor(colorSaturation: ColorSaturation.lowSaturation)),
   Product(
-      id: 4,
+      id: "B001CHCQ9I",
       title: "Massage Table Sheet Set - Poly/cotton",
       price: 24,
       size: 11,
@@ -59,7 +59,7 @@ List<Product> products = [
       color: RandomColor()
           .randomColor(colorSaturation: ColorSaturation.lowSaturation)),
   Product(
-      id: 5,
+      id: "B0016BJS2S",
       title: "TRIMEDICA, AlkaMax pH Plus Liquid - 1 oz",
       price: 39,
       size: 12,
@@ -68,7 +68,7 @@ List<Product> products = [
       color: RandomColor()
           .randomColor(colorSaturation: ColorSaturation.lowSaturation)),
   Product(
-      id: 6,
+      id: "B000V73YY6sß",
       title: "Germ Free Warm Mist Humidifier",
       price: 23,
       size: 12,

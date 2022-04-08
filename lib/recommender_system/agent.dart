@@ -4,7 +4,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 class Agent {
   final _modelFile = "model.tflite";
 
-  late Interpreter _interpreter;
+  Interpreter? _interpreter;
 
   Agent() {
     _loadModel();
@@ -19,7 +19,7 @@ class Agent {
     var output = List.filled(3, "0");
 
     // Inference
-    _interpreter.run(input, output);
+    _interpreter?.run(input, output);
 
     debugPrint(output.toString());
 

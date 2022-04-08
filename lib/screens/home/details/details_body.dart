@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
+import 'package:hybrid_gift/recommender_system/agent.dart';
 
 import '../item_card.dart';
 import '../item_list.dart';
@@ -19,7 +20,18 @@ class DetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final Agent _agent = Agent();
 
+    List<Product> prediction = [];
+    String predictionID = _agent.predict(product.id).toString();
+
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < products.length; j++) {
+        if (predictionID[i] == products[j].id) {
+          prediction.add(product);
+        }
+      }
+    }
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -58,12 +70,12 @@ class DetailsBody extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: 3,
                             itemBuilder: (context, index) => ItemList(
-                              product: products[index],
+                              product: prediction[index],
                               press: () => Navigator.push<MaterialPageRoute>(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => DetailsScreen(
-                                    product: products[index],
+                                    product: prediction[index],
                                   ),
                                 ),
                               ),
