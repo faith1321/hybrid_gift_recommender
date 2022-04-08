@@ -171,24 +171,17 @@ print(f"Ranking RMSE: {metrics['root_mean_squared_error']:.3f}.")
 # Convert into Tensorflow Lite
 tflite_model_dir = "assets"
 
-# model.retrieval_task = tfrs.tasks.Retrieval()  # Removes the metrics.
-# model.compile()
+model.retrieval_task = tfrs.tasks.Retrieval()  # Removes the metrics.
+model.compile()
 
-# saved_model = tf.saved_model.save(model, tflite_model_dir)
-
-run_model = tf.function(lambda x: model(x))
-concrete_function = run_model.get_concrete_function(
-    tf.TensorSpec(model.inputs[0].shape, model.inputs[0].dtype)
-)
+saved_model = tf.saved_model.save(model, tflite_model_dir)
 
 # Convert the model to standard TensorFlow Lite model
-converter = tf.lite.TFLiteConverter.from_concrete_functions(
-    [concrete_function])
-# converter = tf.lite.TFLiteConverter.from_saved_model(tflite_model_dir)
+converter = tf.lite.TFLiteConverter.from_saved_model(tflite_model_dir)
 tflite_model = converter.convert()
 
 # Save the model.
-with open('model.tflite', 'wb') as f:
+with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
 
 # converter = tf.lite.TFLiteConverter.from_keras_model(model)
