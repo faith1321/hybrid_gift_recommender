@@ -32,6 +32,7 @@ class DetailsBody extends StatelessWidget {
         }
       }
     }
+
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -70,12 +71,12 @@ class DetailsBody extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: 3,
                             itemBuilder: (context, index) => ItemList(
-                              product: prediction[index],
+                              product: products[index],
                               press: () => Navigator.push<MaterialPageRoute>(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => DetailsScreen(
-                                    product: prediction[index],
+                                    product: products[index],
                                   ),
                                 ),
                               ),

@@ -12,7 +12,7 @@ from typing import Dict, Text
 
 trainNum = 8_000
 testNum = 2_000
-learningRate = 0.1
+learningRate = 0.5
 
 # Dataset Pre-processing
 # Import Dataset
@@ -168,7 +168,7 @@ print(
     f"Retrieval top-100 accuracy: {metrics['factorized_top_k/top_100_categorical_accuracy']:.3f}.")
 print(f"Ranking RMSE: {metrics['root_mean_squared_error']:.3f}.")
 
-# Convert into Tensorflow Lite
+# Save model to SavedModel format
 tflite_model_dir = "assets"
 
 model.retrieval_task = tfrs.tasks.Retrieval()  # Removes the metrics.

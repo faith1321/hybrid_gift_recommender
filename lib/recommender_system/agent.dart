@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
@@ -15,7 +17,7 @@ class Agent {
   }
 
   List predict(String itemID) {
-    var input = itemID;
+    var input = utf8.encode(itemID);
     var output = List.filled(3, "0");
 
     // Inference
