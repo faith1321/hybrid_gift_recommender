@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-tflite_interpreter = tf.lite.Interpreter(model_path="assets")
+tflite_interpreter = tf.lite.Interpreter(model_path="assets/model.tflite")
 
 input_details = tflite_interpreter.get_input_details()
 output_details = tflite_interpreter.get_output_details()
