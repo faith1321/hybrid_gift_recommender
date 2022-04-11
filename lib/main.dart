@@ -9,6 +9,10 @@ import 'package:provider/provider.dart';
 ///
 /// Instantiates [ApplicationState] and [App].
 void main() {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+// can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
