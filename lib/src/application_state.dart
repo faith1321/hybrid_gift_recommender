@@ -1,48 +1,11 @@
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/authentication.dart';
-import 'package:hybrid_gift/src/userbook.dart';
 
 class ApplicationState extends ChangeNotifier {
-  ApplicationState() {
-    init();
-  }
-
-  Future<void> init() async {
-    await Firebase.initializeApp();
-
-    FirebaseAuth.instance.userChanges().listen((user) {
-      if (user != null) {
-        _loginState = ApplicationLoginState.loggedIn;
-        _userBookSubscription = FirebaseFirestore.instance
-            .collection('userbook')
-            .orderBy('timestamp', descending: true)
-            .limit(3)
-            .snapshots()
-            .listen((snapshot) {
-          _userBookMessages = [];
-          for (final document in snapshot.docs) {
-            _userBookMessages.add(
-              UserBookMessage(
-                name: document.data()['name'] as String,
-                message: document.data()['text'] as String,
-              ),
-            );
-          }
-          notifyListeners();
-        });
-      } else {
-        _loginState = ApplicationLoginState.loggedOut;
-        _userBookMessages = [];
-        _userBookSubscription?.cancel();
-      }
-      notifyListeners();
-    });
-  }
+  late final FirebaseAuth _auth = FirebaseAuth.instance;
 
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _loginState;
@@ -50,9 +13,22 @@ class ApplicationState extends ChangeNotifier {
   String? _email;
   String? get email => _email;
 
-  StreamSubscription<QuerySnapshot>? _userBookSubscription;
-  List<UserBookMessage> _userBookMessages = [];
-  List<UserBookMessage> get userBookMessages => _userBookMessages;
+  ApplicationState() {
+    init();
+  }
+
+  Future<void> init() async {
+    await Firebase.initializeApp();
+
+    _auth.userChanges().listen((user) {
+      if (user != null) {
+        _loginState = ApplicationLoginState.loggedIn;
+      } else {
+        _loginState = ApplicationLoginState.loggedOut;
+      }
+      notifyListeners();
+    });
+  }
 
   void startLoginFlow() {
     _loginState = ApplicationLoginState.emailAddress;
@@ -64,8 +40,7 @@ class ApplicationState extends ChangeNotifier {
     void Function(FirebaseAuthException e) errorCallback,
   ) async {
     try {
-      var methods =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+      var methods = await _auth.fetchSignInMethodsForEmail(email);
       if (methods.contains('password')) {
         _loginState = ApplicationLoginState.password;
       } else {
@@ -84,7 +59,7 @@ class ApplicationState extends ChangeNotifier {
     void Function(FirebaseAuthException e) errorCallback,
   ) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -104,30 +79,35 @@ class ApplicationState extends ChangeNotifier {
       String password,
       void Function(FirebaseAuthException e) errorCallback) async {
     try {
-      var credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      var credential = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       await credential.user!.updateDisplayName(displayName);
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
   }
 
-  void signOut() {
-    FirebaseAuth.instance.signOut();
+  // GET UID
+  String? getCurrentUID() {
+    return _auth.currentUser?.uid;
   }
 
-  Future<DocumentReference> addMessageToUserBook(String message) {
-    if (_loginState != ApplicationLoginState.loggedIn) {
-      throw Exception('Must be logged in');
-    }
+  // GET CURRENT USER
+  Future getCurrentUser() async {
+    return _auth.currentUser;
+  }
 
-    return FirebaseFirestore.instance
-        .collection('userbook')
-        .add(<String, dynamic>{
-      'text': message,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
-      'name': FirebaseAuth.instance.currentUser!.displayName,
-      'userId': FirebaseAuth.instance.currentUser!.uid,
-    });
+  Widget getProfileImage() {
+    String? img = _auth.currentUser?.photoURL;
+
+    if (img != null) {
+      return Image.network(img, height: 100, width: 100);
+    } else {
+      return const Icon(Icons.account_circle, size: 100);
+    }
+  }
+
+  void signOut() {
+    _auth.signOut();
   }
 }

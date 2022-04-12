@@ -18,13 +18,13 @@ class AddCart extends StatelessWidget {
             height: 50,
             width: 58,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(18.0),
               border: Border.all(
                 color: product.color,
               ),
             ),
             child: IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.favorite_border_rounded),
               color: product.color,
               onPressed: () {},
             ),
@@ -33,15 +33,22 @@ class AddCart extends StatelessWidget {
             child: SizedBox(
               height: 50,
               child: TextButton(
-                onPressed: () {},
                 child: Text(
-                  "Buy Now".toUpperCase(),
+                  "Add to cart".toUpperCase(),
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: product.color,
+                  onSurface: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0)),
+                ),
+                onPressed: () {},
               ),
             ),
           ),

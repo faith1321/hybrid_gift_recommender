@@ -16,12 +16,13 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: StyledButton(
+        child: Column(children: [
+      StyledButton(
         onPressed: () {
           widget.signOut();
         },
         child: const Text('Logout'),
       ),
-    );
+    ]));
   }
 }

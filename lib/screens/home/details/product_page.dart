@@ -53,7 +53,7 @@ class ProductPage extends StatelessWidget {
           FittedBox(
             alignment: Alignment.bottomRight,
             child: Hero(
-              tag: "${product.id}",
+              tag: product.id,
               child: Image.asset(
                 product.image,
                 fit: BoxFit.contain,
