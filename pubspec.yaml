@@ -29,6 +29,7 @@ dependencies:
   transparent_image: ^2.0.0
   get_it: ^7.2.0
   flutter_riverpod: ^1.0.3
+  dcdg: ^4.0.1
 
 dev_dependencies:
   flutter_test:
