@@ -79,17 +79,36 @@ class ApplicationState extends ChangeNotifier {
       String password,
       void Function(FirebaseAuthException e) errorCallback) async {
     try {
-      var credential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      await credential.user!.updateDisplayName(displayName);
+      // var credential = await _auth.createUserWithEmailAndPassword(
+      //     email: email, password: password);
+      // await credential.user!.updateDisplayName(displayName);
+      await createUserWithEmail(email, password, displayName);
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
   }
 
+  Future<void> createUserWithEmail(
+      String email, String password, String displayName) async {
+    final result = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    await updateDisplayName(displayName, result.user);
+    await result.user!.updateDisplayName(displayName);
+  }
+
+  Future updateDisplayName(String displayName, User? user) async {
+    await user?.updateDisplayName(displayName);
+    await user?.reload();
+  }
+
   // GET UID
   String? getCurrentUID() {
     return _auth.currentUser?.uid;
+  }
+
+  String? getCurrentDisplayName() {
+    return _auth.currentUser?.displayName;
   }
 
   // GET CURRENT USER

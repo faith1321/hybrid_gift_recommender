@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/screens/home/home_page.dart';
-import 'package:hybrid_gift/screens/order/order_page.dart';
+import 'package:hybrid_gift/screens/user/user_page.dart';
 import 'package:hybrid_gift/search_bar.dart';
-import 'package:hybrid_gift/src/user_page.dart';
 import 'package:textfield_search/textfield_search.dart';
 
 /// Creates the main app interface after login.
