@@ -60,8 +60,10 @@ test = shuffledTools.skip(trainNum).take(testNum)
 
 
 class Model(tfrs.Model):
-    def __init__(self, rating_weight: float, retrieval_weight: float) -> None:
+    def __init__(self, rank_weight: float, retr_weight: float) -> None:
         super().__init__()
+
+        # Query Tower
         embeddingDim = 32
 
         # Model that represents customers with Matrix Factorization
@@ -72,6 +74,7 @@ class Model(tfrs.Model):
             tf.keras.layers.Embedding(len(uniqueCustomerID) + 1, embeddingDim)
         ])
 
+        # Candidate Tower
         # Model that represents products
         self.product_model = tf.keras.Sequential([
             tf.keras.layers.StringLookup(
@@ -81,31 +84,31 @@ class Model(tfrs.Model):
         ])
 
         # RELU-based DNN
-        self.rating_model = tf.keras.Sequential([
+        self.rank_model = tf.keras.Sequential([
             tf.keras.layers.Dense(256, activation="relu"),
             tf.keras.layers.Dense(128, activation="relu"),
             tf.keras.layers.Dense(64, activation="relu"),
             tf.keras.layers.Dense(1, activation="relu"),
         ])
 
-        # Loss function used to train the models using the Factorized Top-k Method for Retrieval
+        # Loss function for Retrieval, used to train the models using the Factorized Top-k Method
         # Predict the items the user will prefer.
-        self.retrieval_task = tfrs.tasks.Retrieval(
+        self.retr_task = tfrs.tasks.Retrieval(
             metrics=tfrs.metrics.FactorizedTopK(
                 candidates=product.batch(128).cache().map(self.product_model)
             )
         )
 
-        # Loss function for rating
+        # Loss function for Ranking
         # Predict the ratings of the item
-        self.rating_task = tfrs.tasks.Ranking(
+        self.rank_task = tfrs.tasks.Ranking(
             loss=tf.keras.losses.MeanAbsoluteError(),
             metrics=[tf.keras.metrics.RootMeanSquaredError()],
         )
 
         # The loss weights
-        self.rating_weight = rating_weight
-        self.retrieval_weight = retrieval_weight
+        self.rank_weight = rank_weight
+        self.retr_weight = retr_weight
 
     def call(self, features: Dict[Text, tf.Tensor]) -> tf.Tensor:
 
@@ -120,7 +123,7 @@ class Model(tfrs.Model):
             product_embeddings,
             # We apply the multi-layered rating model to a concatentation of
             # user and item embeddings.
-            self.rating_model(
+            self.rank_model(
                 tf.concat([customer_embeddings, product_embeddings], axis=1)
             ),
         )
@@ -133,17 +136,17 @@ class Model(tfrs.Model):
             features)
 
         # We compute the loss for each task.
-        rating_loss = self.rating_task(
+        rank_loss = self.rank_task(
             labels=ratings,
             predictions=rating_predictions,
         )
 
-        retrieval_loss = self.retrieval_task(
+        retr_loss = self.retr_task(
             customer_embeddings, product_embeddings)
 
         # And combine them using the loss weights.
-        return (self.rating_weight * rating_loss
-                + self.retrieval_weight * retrieval_loss)
+        return (self.rank_weight * rank_loss
+                + self.retr_weight * retr_loss)
 
 
 # Early stopping function to prevent overfitting
@@ -151,7 +154,7 @@ earlystopping = tf.keras.callbacks.EarlyStopping(monitor="loss",
                                                  mode="min", patience=5,
                                                  restore_best_weights=True)
 
-model = Model(retrieval_weight=0.5, rating_weight=0.5)
+model = Model(retr_weight=0.5, rank_weight=0.5)
 
 model.compile(optimizer=tf.keras.optimizers.Adagrad(
     learning_rate=learningRate), loss="mean_squared_error")
@@ -171,7 +174,7 @@ print(f"Ranking RMSE: {metrics['root_mean_squared_error']:.3f}.")
 # Save model to SavedModel format
 tflite_model_dir = "assets"
 
-model.retrieval_task = tfrs.tasks.Retrieval()  # Removes the metrics.
+model.retr_task = tfrs.tasks.Retrieval()  # Removes the metrics.
 model.compile()
 
 saved_model = tf.saved_model.save(model, tflite_model_dir)
@@ -183,19 +186,6 @@ tflite_model = converter.convert()
 # Save the model.
 with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
-
-# converter = tf.lite.TFLiteConverter.from_keras_model(model)
-# converter.target_spec.supported_ops = [
-#     tf.lite.OpsSet.TFLITE_BUILTINS,  # enable TensorFlow Lite ops.
-#     tf.lite.OpsSet.SELECT_TF_OPS  # enable TensorFlow ops.
-# ]
-
-# converter.optimizations = [tf.lite.Optimize.DEFAULT]
-# converter.target_spec.supported_types = [tf.float16]
-
-# tflite_f16_model = converter.convert()
-# tflite_f16_file = tflite_model_dir/"recommender_f16.tflite"
-# tflite_f16_file.write_bytes(tflite_f16_model)
 
 # Retrieving Top-K Candidates
 # Dummy values created to simulate larger dataset
