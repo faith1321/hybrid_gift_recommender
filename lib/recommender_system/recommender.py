@@ -1,23 +1,39 @@
 # Imports
 import pprint
 import tensorflow as tf
+import tensorboard
 import pandas as pd
-
 import numpy as np
 import tensorflow_datasets as tfds
 import tensorflow_recommenders as tfrs
 import tempfile
 import pathlib
+from datetime import datetime
+from keras import backend as k
 from typing import Dict, Text
 
-trainNum = 8_000
-testNum = 2_000
+# Constants
 learningRate = 0.5
+seed = 1
+batchSize = 10_000
+folds = range(10)
+keys = {"customer_id", "product_title", "star_rating"}
 
-# Dataset Pre-processing
+
+# ---------------------------------------------------------------------------- #
+#                            Dataset Pre-processing                            #
+# ---------------------------------------------------------------------------- #
 # Import Dataset
 
 # Personal Care Section Importing From amazon_us_reviews dataset
+# test_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split='train[:20%]'
+#                     )
+# val_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
+#     f'train[{k}%:{k+8}%]' for k in range(0, 80, 8)
+# ])
+# train_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
+#     f'train[:{k}%]+train[{k+8}%:]' for k in range(0, 80, 8)
+# ])
 test_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
     f'train[{k}%:{k+10}%]' for k in range(0, 100, 10)
 ])
@@ -25,40 +41,56 @@ train_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
     f'train[:{k}%]+train[{k+10}%:]' for k in range(0, 100, 10)
 ])
 
-tools1 = toolsProcessed = list()
+train1 = train = test1 = test = list()
 
-for k in range(10):
-    tools1.append(train_ds[k].map(lambda x: x["data"]))
-    toolsProcessed[k] = tools1[k].map(lambda x: {
+# Changing dataset into dictionaries
+for k in folds:
+    train1.append(train_ds[k].map(lambda x: x["data"]))
+    train[k] = train1[k].map(lambda x: {
         "customer_id": x["customer_id"],
         "product_title": x["product_title"],
         "star_rating": x["star_rating"]
     })
-    tf.random.set_seed(1)
-    shuffledTools = toolsProcessed[k].shuffle(
-        10_000, seed=1, reshuffle_each_iteration=False)
+    tf.random.set_seed(seed)
+    trainS = train[k].shuffle(
+        10_000, seed=seed, reshuffle_each_iteration=False)
 
+    # val1.append(val_ds[k].map(lambda x: x["data"]))
+    # val[k] = val1[k].map(lambda x: {"customer_id": x["customer_id"],
+    #                                 "product_title": x["product_title"],
+    #                                 "star_rating": x["star_rating"]})
+
+    test1.append(test_ds[k].map(lambda x: x["data"]))
+    test[k] = test1[k].map(lambda x: {"customer_id": x["customer_id"],
+                                      "product_title": x["product_title"],
+                                      "star_rating": x["star_rating"]})
+    testS = test[k].shuffle(
+        10_000, seed=seed, reshuffle_each_iteration=False)
     # Determine Unique Customer and Product ID
-    customerID = (toolsProcessed[k]
+    customerID = (train[k]
                   # Retain only the fields we need.
                   .map(lambda x: x["customer_id"])
                   )
-    product = (toolsProcessed[k]
+    product = (train[k]
                .map(lambda x: x["product_title"])
                )
+
+    # test1 = list(test_ds)
+    # test2 = [x["data"] for x in test1]
+    # test = [{key: value for key, value in d.items() if key in keys}for d in test2]
 
     uniqueCustomerID = np.unique(np.concatenate(list(customerID.batch(1_000))))
     uniqueProduct = np.unique(np.concatenate(list(product.batch(1_000))))
 
-# Split into Training and Testing Sets
+# Split into Training and Testing Sets for Cross Validation
 
-train = shuffledTools.take(trainNum)
+train = trainS.take(len(trainS))
+test = testS.take(len(testS))
 
-test = shuffledTools.skip(trainNum).take(testNum)
+# test = train.skip(trainNum).take(testNum)
+
 
 # Model
-
-
 class Model(tfrs.Model):
     def __init__(self, rank_weight: float, retr_weight: float) -> None:
         super().__init__()
@@ -150,34 +182,50 @@ class Model(tfrs.Model):
 
 
 # Early stopping function to prevent overfitting
-earlystopping = tf.keras.callbacks.EarlyStopping(monitor="loss",
+earlystopping = tf.keras.callbacks.EarlyStopping(monitor="root_mean_squared_error",
                                                  mode="min", patience=5,
-                                                 restore_best_weights=True)
+                                                 restore_best_weights=True, baseline=None)
+
+
+def rmse(true, pred):
+    return tf.sqrt(tf.reduce_mean(tf.square(pred - true)))
+
+
+# Graph plotting variables
+logdir = "assets/logs/fit/" + datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
 
 model = Model(retr_weight=0.5, rank_weight=0.5)
 
-model.compile(optimizer=tf.keras.optimizers.Adagrad(
-    learning_rate=learningRate), loss="mean_squared_error")
+model.compile(optimizer=tf.keras.optimizers.Adam(
+    learning_rate=learningRate), loss="rmse")
 
 # Model Fitting and Evaluation
-cachedTrain = train.shuffle(10_000).batch(8192).cache()
-cachedTest = test.batch(4096).cache()
+train = train.shuffle(10_000).batch(8192).cache()
+test = test.batch(4096).cache()
 
-model.fit(cachedTrain, epochs=100, callbacks=[earlystopping])
+# for k in folds:
+#     model.fit(train, epochs=100, callbacks=[earlystopping])
+#     metric = model.evaluate(val, return_dict=True)
+#     total_rmse = metric["root_mean_squared_error"]
+
+
+model.fit(train, epochs=100, callbacks=[earlystopping, tensorboard_callback])
 # model.fit(cachedTrain, epochs=10)
-metrics = model.evaluate(cachedTest, return_dict=True)
+metrics = model.evaluate(test, return_dict=True)
 
 print(
     f"Retrieval top-100 accuracy: {metrics['factorized_top_k/top_100_categorical_accuracy']:.3f}.")
 print(f"Ranking RMSE: {metrics['root_mean_squared_error']:.3f}.")
 
+
 # Save model to SavedModel format
 tflite_model_dir = "assets"
 
-model.retr_task = tfrs.tasks.Retrieval()  # Removes the metrics.
-model.compile()
+# model.retrieval_task = tfrs.tasks.Retrieval()  # Removes the metrics.
+# model.compile()
 
-saved_model = tf.saved_model.save(model, tflite_model_dir)
+saved_model = model.save_weights(tflite_model_dir, save_format="tf")
 
 # Convert the model to standard TensorFlow Lite model
 converter = tf.lite.TFLiteConverter.from_saved_model(tflite_model_dir)
@@ -186,6 +234,10 @@ tflite_model = converter.convert()
 # Save the model.
 with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
+
+# ---------------------------------------------------------------------------- #
+#                                  Test Output                                 #
+# ---------------------------------------------------------------------------- #
 
 # Retrieving Top-K Candidates
 # Dummy values created to simulate larger dataset
