@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 import 'package:hybrid_gift/screens/home/categories.dart';
 import 'package:hybrid_gift/screens/home/details/details_screen.dart';
 import 'package:hybrid_gift/screens/home/item_card.dart';
-import 'package:hybrid_gift/src/application_state.dart';
-import 'package:provider/provider.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 /// Loads the main functional elements into the Home Page.
 class HomePage extends StatelessWidget {
@@ -13,9 +11,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.select(
-      (ApplicationState _state) => _state.addOrderToUser(products.first.title),
-    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,

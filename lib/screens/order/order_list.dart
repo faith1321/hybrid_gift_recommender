@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
-import 'package:hybrid_gift/src/order_book.dart';
+import 'package:hybrid_gift/screens/order/order_book.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 class OrderList extends StatelessWidget {
   final UserOrder order;

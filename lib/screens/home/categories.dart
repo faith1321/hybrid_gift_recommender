@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);

@@ -1,10 +1,12 @@
 import 'dart:async';
+
+import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hybrid_gift/screens/order/order_book.dart';
 import 'package:hybrid_gift/src/authentication.dart';
-import 'package:hybrid_gift/src/order_book.dart';
 
 class ApplicationState extends ChangeNotifier {
   late final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -40,10 +42,6 @@ class ApplicationState extends ChangeNotifier {
               ),
             );
           }
-          // print(FirebaseFirestore.instance
-          //     .collection("users")
-          //     .where("displayName", isEqualTo: _auth.currentUser?.displayName)
-          //     .get());
           notifyListeners();
         });
       } else {
@@ -155,18 +153,19 @@ class ApplicationState extends ChangeNotifier {
     _auth.signOut();
   }
 
-  // Stream<QuerySnapshot> getStream() {
-  //   return _users;
-  // }
+  Future<CameraDescription> loadCamera() async {
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
 
-  Future<void> getOrder() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("users").get();
+    // Get a specific camera from the list of available cameras.
+    final firstCamera = cameras.first;
+
+    return firstCamera;
   }
 
   /// Appends a new order to Firebase Firestore and
   /// updates the changes to the local list.
-  Future<DocumentReference> addOrderToUser(String order) {
+  Future<void> addOrderToUser(String order) {
     if (_loginState != ApplicationLoginState.loggedIn) {
       throw Exception('Must be logged in');
     }
@@ -184,5 +183,9 @@ class ApplicationState extends ChangeNotifier {
       // },
       // SetOptions(merge: true),
     );
+  }
+
+  void clearList() {
+    _userOrders = [];
   }
 }

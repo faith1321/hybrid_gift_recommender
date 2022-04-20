@@ -1,22 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
-import 'package:hybrid_gift/screens/user/order_list.dart';
-import 'package:hybrid_gift/screens/user/order_screen.dart';
+import 'package:hybrid_gift/screens/order/order_list.dart';
+import 'package:hybrid_gift/screens/order/order_screen.dart';
 import 'package:hybrid_gift/src/application_state.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 class OrderPage extends StatelessWidget {
-  const OrderPage({Key? key}) : super(key: key);
+  OrderPage({Key? key}) : super(key: key);
+  final orderedItem = products.first.title;
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      // IconButton(
-      //   alignment: Alignment.topRight,
-      //   icon: const Icon(Icons.refresh_rounded),
-      //   onPressed: () {},
-      // ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            alignment: Alignment.topRight,
+            icon: const Icon(Icons.add_circle_outline_rounded),
+            onPressed: () {
+              context.read<ApplicationState>().addOrderToUser(orderedItem);
+            },
+          ),
+          IconButton(
+            onPressed: () {
+              context.read<ApplicationState>().clearList();
+            },
+            icon: const Icon(Icons.delete_outline_rounded),
+          ),
+        ],
+      ),
       Center(
         child: Consumer<ApplicationState>(
           builder: (context, appState, _) => SizedBox(

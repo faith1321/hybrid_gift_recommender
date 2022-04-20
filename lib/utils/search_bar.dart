@@ -1,7 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hybrid_gift/constants.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 import 'package:textfield_search/textfield_search.dart';
 
 class SearchBar extends StatefulWidget {

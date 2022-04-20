@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 import 'package:hybrid_gift/recommender_system/agent.dart';
 import 'package:hybrid_gift/screens/home/details/add_cart.dart';
@@ -9,6 +8,7 @@ import 'package:hybrid_gift/screens/home/details/description.dart';
 import 'package:hybrid_gift/screens/home/details/details_screen.dart';
 import 'package:hybrid_gift/screens/home/details/product_page.dart';
 import 'package:hybrid_gift/screens/home/item_list.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 class DetailsBody extends StatelessWidget {
   final Product product;

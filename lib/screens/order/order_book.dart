@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'widgets.dart';
+import '../../src/widgets.dart';
 
 class UserOrder {
   UserOrder({required this.orderedProduct});

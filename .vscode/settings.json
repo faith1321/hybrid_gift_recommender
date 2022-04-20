@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        "android/*": true,
+        "build/*": true,
+        "ios/*": true
+    }
+}

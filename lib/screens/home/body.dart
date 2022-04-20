@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/models/products.dart';
 import 'package:hybrid_gift/screens/home/categories.dart';
 import 'package:hybrid_gift/screens/home/details/details_screen.dart';
 import 'package:hybrid_gift/screens/home/item_card.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

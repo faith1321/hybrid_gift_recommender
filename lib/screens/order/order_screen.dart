@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/screens/user/order_list.dart';
-import 'package:hybrid_gift/src/order_book.dart';
+import 'package:hybrid_gift/models/products.dart';
+import 'package:hybrid_gift/screens/order/order_body.dart';
+import 'package:hybrid_gift/screens/order/order_book.dart';
 
 /// Creates the item details screen.
 
@@ -25,10 +26,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: OrderList(
-        order: widget.order,
-        press: () {},
-      ),
+      body: OrderBody(order: widget.order),
     );
   }
 
@@ -41,6 +39,12 @@ class _OrderScreenState extends State<OrderScreen> {
         color: Colors.white,
         onPressed: () => Navigator.pop(context),
       ),
+      backgroundColor: products
+          .firstWhere(
+            (element) => element.title == widget.order.orderedProduct,
+            orElse: () => products.first,
+          )
+          .color,
       // actions: [
       //   // Search Function
       //   const SearchBar(type: "details"),

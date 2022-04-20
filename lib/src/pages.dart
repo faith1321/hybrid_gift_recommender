@@ -1,9 +1,9 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hybrid_gift/constants.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 import 'package:hybrid_gift/screens/home/home_page.dart';
-import 'package:hybrid_gift/screens/user/order_page.dart';
+import 'package:hybrid_gift/screens/order/order_page.dart';
 import 'package:hybrid_gift/screens/user/user_page.dart';
 import 'package:textfield_search/textfield_search.dart';
 
@@ -90,7 +90,7 @@ class _PagesState extends State<Pages> {
             else if (_selectedIndex == 0)
               const Expanded(child: HomePage())
             else if (_selectedIndex == 1)
-              const OrderPage()
+              OrderPage()
             else
               Container(),
           ],
@@ -112,7 +112,6 @@ class _PagesState extends State<Pages> {
           ),
         ],
         currentIndex: _selectedIndex,
-        // selectedItemColor: Color.fromARGB(255, 42, 148, 100),
         onTap: _onNavBarItemTapped,
         type: BottomNavigationBarType.fixed,
       ),

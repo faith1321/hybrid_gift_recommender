@@ -1,17 +1,23 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/authentication.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 import 'package:provider/provider.dart';
+
+late final CameraDescription firstCamera;
 
 /// The main function that runs the app.
 ///
 /// Instantiates [ApplicationState] and [App].
-void main() {
+Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
 // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
+
+  final cameras = await availableCameras();
+  firstCamera = cameras.first;
 
   runApp(
     ChangeNotifierProvider(
