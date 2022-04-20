@@ -90,7 +90,9 @@ test = testS.take(len(testS))
 # test = train.skip(trainNum).take(testNum)
 
 
-# Model
+# ---------------------------------------------------------------------------- #
+#                                     Model                                    #
+# ---------------------------------------------------------------------------- #
 class Model(tfrs.Model):
     def __init__(self, rank_weight: float, retr_weight: float) -> None:
         super().__init__()
@@ -153,7 +155,7 @@ class Model(tfrs.Model):
         return (
             customer_embeddings,
             product_embeddings,
-            # We apply the multi-layered rating model to a concatentation of
+            # Multi-layered rating model applied to a concatentation of
             # user and item embeddings.
             self.rank_model(
                 tf.concat([customer_embeddings, product_embeddings], axis=1)
@@ -181,6 +183,9 @@ class Model(tfrs.Model):
                 + self.retr_weight * retr_loss)
 
 
+# ---------------------------------------------------------------------------- #
+#                       Model Initialization and Training                      #
+# ---------------------------------------------------------------------------- #
 # Early stopping function to prevent overfitting
 earlystopping = tf.keras.callbacks.EarlyStopping(monitor="root_mean_squared_error",
                                                  mode="min", patience=5,
@@ -212,6 +217,10 @@ test = test.batch(4096).cache()
 
 model.fit(train, epochs=100, callbacks=[earlystopping, tensorboard_callback])
 # model.fit(cachedTrain, epochs=10)
+
+# ---------------------------------------------------------------------------- #
+#                               Model Evaluation                               #
+# ---------------------------------------------------------------------------- #
 metrics = model.evaluate(test, return_dict=True)
 
 print(
@@ -236,7 +245,7 @@ with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
 
 # ---------------------------------------------------------------------------- #
-#                                  Test Output                                 #
+#                                Output Testing                                #
 # ---------------------------------------------------------------------------- #
 
 # Retrieving Top-K Candidates

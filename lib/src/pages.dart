@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hybrid_gift/constants.dart';
 import 'package:hybrid_gift/screens/home/home_page.dart';
+import 'package:hybrid_gift/screens/user/order_page.dart';
 import 'package:hybrid_gift/screens/user/user_page.dart';
-import 'package:hybrid_gift/search_bar.dart';
 import 'package:textfield_search/textfield_search.dart';
 
 /// Creates the main app interface after login.
@@ -41,8 +41,7 @@ class _PagesState extends State<Pages> {
     setState(() {
       _selectedIndex = index;
     });
-    // index == 2 ? _onLogOutTapped(true) : _onLogOutTapped(false);
-    index == 1 ? _onLogOutTapped(true) : _onLogOutTapped(false);
+    index == 2 ? _onLogOutTapped(true) : _onLogOutTapped(false);
   }
 
   /// Controls the login status of the user.
@@ -64,7 +63,7 @@ class _PagesState extends State<Pages> {
         data[0][i] = _listData[0][i].toString();
       }
     });
-    print(data);
+    // print(data);
     return data;
   }
 
@@ -90,8 +89,8 @@ class _PagesState extends State<Pages> {
             // Otherwise, change to the selected page.
             else if (_selectedIndex == 0)
               const Expanded(child: HomePage())
-            // else if (_selectedIndex == 1)
-            //   const OrderPage()
+            else if (_selectedIndex == 1)
+              const OrderPage()
             else
               Container(),
           ],
@@ -103,10 +102,10 @@ class _PagesState extends State<Pages> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.list_alt),
-          //   label: 'Orders',
-          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'Orders',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'User',
@@ -151,7 +150,7 @@ class _PagesState extends State<Pages> {
                           return _loadCSV();
                         },
                         getSelectedValue: (dynamic value) {
-                          print(value);
+                          // print(value);
                         },
                         decoration: InputDecoration(
                           hintText: "Search a product",

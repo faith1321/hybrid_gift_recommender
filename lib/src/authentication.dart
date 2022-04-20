@@ -134,7 +134,7 @@ class Authentication extends StatelessWidget {
             child: ListBody(
               children: <Widget>[
                 Text(
-                  '${(e as dynamic).message}',
+                  '${(e as dynamic).orderedProduct}',
                   style: const TextStyle(fontSize: 18),
                 ),
               ],
