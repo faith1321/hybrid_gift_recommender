@@ -1,23 +1,25 @@
 # Imports
+from datetime import datetime
+import json
+import os
 import pprint
+from matplotlib.font_manager import json_dump
 import tensorflow as tf
-import tensorboard
 import pandas as pd
+
 import numpy as np
 import tensorflow_datasets as tfds
 import tensorflow_recommenders as tfrs
 import tempfile
 import pathlib
-from datetime import datetime
-from keras import backend as k
 from typing import Dict, Text
 
-# Constants
-learningRate = 0.5
-seed = 1
-batchSize = 10_000
-folds = range(10)
-keys = {"customer_id", "product_title", "star_rating"}
+LEARNING_RATE = 0.5
+SEED = 1
+BATCH_SIZE = 10_000
+FOLDS = range(10)
+EMBEDDING_DIM = 32
+KEYS = {"customer_id", "product_title", "star_rating"}
 
 
 # ---------------------------------------------------------------------------- #
@@ -26,14 +28,6 @@ keys = {"customer_id", "product_title", "star_rating"}
 # Import Dataset
 
 # Personal Care Section Importing From amazon_us_reviews dataset
-# test_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split='train[:20%]'
-#                     )
-# val_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
-#     f'train[{k}%:{k+8}%]' for k in range(0, 80, 8)
-# ])
-# train_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
-#     f'train[:{k}%]+train[{k+8}%:]' for k in range(0, 80, 8)
-# ])
 test_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
     f'train[{k}%:{k+10}%]' for k in range(0, 100, 10)
 ])
@@ -43,29 +37,23 @@ train_ds = tfds.load('amazon_us_reviews/Personal_Care_Appliances_v1_00', split=[
 
 train1 = train = test1 = test = list()
 
-# Changing dataset into dictionaries
-for k in folds:
+for k in FOLDS:
     train1.append(train_ds[k].map(lambda x: x["data"]))
     train[k] = train1[k].map(lambda x: {
         "customer_id": x["customer_id"],
         "product_title": x["product_title"],
         "star_rating": x["star_rating"]
     })
-    tf.random.set_seed(seed)
+    tf.random.set_seed(SEED)
     trainS = train[k].shuffle(
-        10_000, seed=seed, reshuffle_each_iteration=False)
-
-    # val1.append(val_ds[k].map(lambda x: x["data"]))
-    # val[k] = val1[k].map(lambda x: {"customer_id": x["customer_id"],
-    #                                 "product_title": x["product_title"],
-    #                                 "star_rating": x["star_rating"]})
+        BATCH_SIZE, seed=SEED, reshuffle_each_iteration=False)
 
     test1.append(test_ds[k].map(lambda x: x["data"]))
     test[k] = test1[k].map(lambda x: {"customer_id": x["customer_id"],
                                       "product_title": x["product_title"],
                                       "star_rating": x["star_rating"]})
     testS = test[k].shuffle(
-        10_000, seed=seed, reshuffle_each_iteration=False)
+        10_000, seed=SEED, reshuffle_each_iteration=False)
     # Determine Unique Customer and Product ID
     customerID = (train[k]
                   # Retain only the fields we need.
@@ -75,35 +63,31 @@ for k in folds:
                .map(lambda x: x["product_title"])
                )
 
-    # test1 = list(test_ds)
-    # test2 = [x["data"] for x in test1]
-    # test = [{key: value for key, value in d.items() if key in keys}for d in test2]
+    uniqueCustomerID = np.unique(
+        np.concatenate(list(customerID.batch(BATCH_SIZE))))
+    uniqueProduct = np.unique(np.concatenate(list(product.batch(BATCH_SIZE))))
 
-    uniqueCustomerID = np.unique(np.concatenate(list(customerID.batch(1_000))))
-    uniqueProduct = np.unique(np.concatenate(list(product.batch(1_000))))
-
-# Split into Training and Testing Sets for Cross Validation
+# Split into Training and Testing Sets
 
 train = trainS.take(len(trainS))
 test = testS.take(len(testS))
 
-# test = train.skip(trainNum).take(testNum)
 
-
-# Model
+# ---------------------------------------------------------------------------- #
+#                                     Model                                    #
+# ---------------------------------------------------------------------------- #
 class Model(tfrs.Model):
     def __init__(self, rank_weight: float, retr_weight: float) -> None:
         super().__init__()
 
         # Query Tower
-        embeddingDim = 32
 
         # Model that represents customers with Matrix Factorization
         self.customer_model = tf.keras.Sequential([
             tf.keras.layers.StringLookup(
                 vocabulary=uniqueCustomerID, mask_token=None),
             # Embedding for unknown tokens
-            tf.keras.layers.Embedding(len(uniqueCustomerID) + 1, embeddingDim)
+            tf.keras.layers.Embedding(len(uniqueCustomerID) + 1, EMBEDDING_DIM)
         ])
 
         # Candidate Tower
@@ -112,13 +96,13 @@ class Model(tfrs.Model):
             tf.keras.layers.StringLookup(
                 vocabulary=uniqueProduct, mask_token=None),
             # Embedding for unknown tokens
-            tf.keras.layers.Embedding(len(uniqueProduct) + 1, embeddingDim)
+            tf.keras.layers.Embedding(len(uniqueProduct) + 1, EMBEDDING_DIM)
         ])
 
         # RELU-based DNN
         self.rank_model = tf.keras.Sequential([
-            tf.keras.layers.Dense(256, activation="relu"),
-            tf.keras.layers.Dense(128, activation="relu"),
+            tf.keras.layers.Dense(256),
+            tf.keras.layers.Dense(128),
             tf.keras.layers.Dense(64, activation="relu"),
             tf.keras.layers.Dense(1, activation="relu"),
         ])
@@ -153,7 +137,7 @@ class Model(tfrs.Model):
         return (
             customer_embeddings,
             product_embeddings,
-            # We apply the multi-layered rating model to a concatentation of
+            # Multi-layered rating model applied to a concatentation of
             # user and item embeddings.
             self.rank_model(
                 tf.concat([customer_embeddings, product_embeddings], axis=1)
@@ -181,10 +165,13 @@ class Model(tfrs.Model):
                 + self.retr_weight * retr_loss)
 
 
+# ---------------------------------------------------------------------------- #
+#                       Model Initialization and Training                      #
+# ---------------------------------------------------------------------------- #
 # Early stopping function to prevent overfitting
 earlystopping = tf.keras.callbacks.EarlyStopping(monitor="root_mean_squared_error",
                                                  mode="min", patience=5,
-                                                 restore_best_weights=True, baseline=None)
+                                                 restore_best_weights=True)
 
 
 def rmse(true, pred):
@@ -198,34 +185,26 @@ tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
 model = Model(retr_weight=0.5, rank_weight=0.5)
 
 model.compile(optimizer=tf.keras.optimizers.Adam(
-    learning_rate=learningRate), loss="rmse")
+    learning_rate=LEARNING_RATE), loss=rmse)
 
 # Model Fitting and Evaluation
-train = train.shuffle(10_000).batch(8192).cache()
-test = test.batch(4096).cache()
-
-# for k in folds:
-#     model.fit(train, epochs=100, callbacks=[earlystopping])
-#     metric = model.evaluate(val, return_dict=True)
-#     total_rmse = metric["root_mean_squared_error"]
-
+train = train.shuffle(BATCH_SIZE).batch(BATCH_SIZE).cache()
+test = test.batch(BATCH_SIZE).cache()
 
 model.fit(train, epochs=100, callbacks=[earlystopping, tensorboard_callback])
-# model.fit(cachedTrain, epochs=10)
 metrics = model.evaluate(test, return_dict=True)
 
 print(
     f"Retrieval top-100 accuracy: {metrics['factorized_top_k/top_100_categorical_accuracy']:.3f}.")
 print(f"Ranking RMSE: {metrics['root_mean_squared_error']:.3f}.")
 
-
 # Save model to SavedModel format
 tflite_model_dir = "assets"
 
-# model.retrieval_task = tfrs.tasks.Retrieval()  # Removes the metrics.
-# model.compile()
+model.retr_task = tfrs.tasks.Retrieval()  # Removes the metrics.
+model.compile()
 
-saved_model = model.save_weights(tflite_model_dir, save_format="tf")
+saved_model = tf.saved_model.save(model, tflite_model_dir)
 
 # Convert the model to standard TensorFlow Lite model
 converter = tf.lite.TFLiteConverter.from_saved_model(tflite_model_dir)
@@ -236,31 +215,15 @@ with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
 
 # ---------------------------------------------------------------------------- #
-#                                  Test Output                                 #
+#                      Save metrics results into JSON file                     #
 # ---------------------------------------------------------------------------- #
+metrics = {key: round(float(a), 3) for key, a in metrics.items()}
+metrics = {datetime.now().strftime("%Y%m%d-%H%M%S"): metrics}
+RESULTS_PATH = "assets/results/results.json"
 
-# Retrieving Top-K Candidates
-# Dummy values created to simulate larger dataset
-uniqueProduct = tf.data.Dataset.from_tensor_slices(uniqueProduct)
+# os.makedirs(RESULTS_PATH, exist_ok=True)
 
-toolsWithDummy = tf.data.Dataset.concatenate(
-    uniqueProduct.batch(4096),
-    uniqueProduct.batch(4096).repeat(1_000).map(lambda x: tf.zeros_like(x))
-)
+jsonFile = json.load(open(RESULTS_PATH, "r"))
+jsonFile.update(metrics)
 
-toolsWithDummyEmb = tf.data.Dataset.concatenate(
-    uniqueProduct.batch(4096).map(model.product_model),
-    uniqueProduct.batch(4096).repeat(1_000)
-    .map(lambda x: model.product_model(x))
-    .map(lambda x: x * tf.random.uniform(tf.shape(x)))
-)
-brute_force = tfrs.layers.factorized_top_k.BruteForce(model.customer_model)
-brute_force.index_from_dataset(
-    uniqueProduct.batch(100).map(
-        lambda prod: (prod, model.product_model(prod)))
-)
-# Get predictions for user.
-id_input = input("Enter the customer ID: ")
-_, titles = brute_force(np.array([str(id_input)]), k=3)
-
-print(f"Top recommendations: {titles[0]}")
+json.dump(jsonFile, open(RESULTS_PATH, "w"))

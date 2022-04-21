@@ -1,0 +1,101 @@
+{
+    "20220418-191620": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.666,
+        "factorized_top_k/top_5_categorical_accuracy": 0.844,
+        "factorized_top_k/top_10_categorical_accuracy": 0.888,
+        "factorized_top_k/top_50_categorical_accuracy": 0.968,
+        "factorized_top_k/top_100_categorical_accuracy": 0.975,
+        "root_mean_squared_error": 1.458,
+        "loss": 7411.874,
+        "regularization_loss": 0.0,
+        "total_loss": 7411.874
+    },
+    "20220418-194235": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.686,
+        "factorized_top_k/top_5_categorical_accuracy": 0.844,
+        "factorized_top_k/top_10_categorical_accuracy": 0.885,
+        "factorized_top_k/top_50_categorical_accuracy": 0.964,
+        "factorized_top_k/top_100_categorical_accuracy": 0.973,
+        "root_mean_squared_error": 4.231,
+        "loss": 7476.4,
+        "regularization_loss": 0.0,
+        "total_loss": 7476.4
+    },
+    "20220418-194533": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.003,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.018,
+        "factorized_top_k/top_100_categorical_accuracy": 0.036,
+        "root_mean_squared_error": 14668.595,
+        "loss": 48597.441,
+        "regularization_loss": 0.0,
+        "total_loss": 48597.441
+    },
+    "20220418-195321": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.672,
+        "factorized_top_k/top_5_categorical_accuracy": 0.845,
+        "factorized_top_k/top_10_categorical_accuracy": 0.888,
+        "factorized_top_k/top_50_categorical_accuracy": 0.966,
+        "factorized_top_k/top_100_categorical_accuracy": 0.974,
+        "root_mean_squared_error": 1.451,
+        "loss": 7390.866,
+        "regularization_loss": 0.0,
+        "total_loss": 7390.866
+    },
+    "20220418-195532": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.68,
+        "factorized_top_k/top_5_categorical_accuracy": 0.849,
+        "factorized_top_k/top_10_categorical_accuracy": 0.891,
+        "factorized_top_k/top_50_categorical_accuracy": 0.968,
+        "factorized_top_k/top_100_categorical_accuracy": 0.975,
+        "root_mean_squared_error": 1.499,
+        "loss": 7384.38,
+        "regularization_loss": 0.0,
+        "total_loss": 7384.38
+    },
+    "20220421-141744": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.002,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.018,
+        "factorized_top_k/top_100_categorical_accuracy": 0.036,
+        "root_mean_squared_error": 24358.557,
+        "loss": 53080.398,
+        "regularization_loss": 0.0,
+        "total_loss": 53080.398
+    },
+    "20220421-141929": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.002,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.018,
+        "factorized_top_k/top_100_categorical_accuracy": 0.037,
+        "root_mean_squared_error": 5704.053,
+        "loss": 44051.902,
+        "regularization_loss": 0.0,
+        "total_loss": 44051.902
+    },
+    "20220421-142628": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.661,
+        "factorized_top_k/top_5_categorical_accuracy": 0.844,
+        "factorized_top_k/top_10_categorical_accuracy": 0.886,
+        "factorized_top_k/top_50_categorical_accuracy": 0.963,
+        "factorized_top_k/top_100_categorical_accuracy": 0.972,
+        "root_mean_squared_error": 1.48,
+        "loss": 7423.387,
+        "regularization_loss": 0.0,
+        "total_loss": 7423.387
+    },
+    "20220421-142901": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.002,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.017,
+        "factorized_top_k/top_100_categorical_accuracy": 0.036,
+        "root_mean_squared_error": 8075.055,
+        "loss": 44440.383,
+        "regularization_loss": 0.0,
+        "total_loss": 44440.383
+    }
+}
