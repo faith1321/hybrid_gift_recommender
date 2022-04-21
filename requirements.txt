@@ -1,0 +1,7 @@
+keras==2.7.0
+numpy==1.22.3
+pandas==1.4.1
+tensorboard==2.6.0
+tensorflow==2.7.0
+tensorflow_datasets==4.2.0
+tensorflow_recommenders==0.3.0
