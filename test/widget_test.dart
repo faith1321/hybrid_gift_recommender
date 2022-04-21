@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hybrid_gift/main.dart';
-import 'package:hybrid_gift/models/products.dart';
+import 'package:hybrid_gift/utils/products.dart';
 import 'package:hybrid_gift/recommender_system/agent.dart';
 
 void main() {

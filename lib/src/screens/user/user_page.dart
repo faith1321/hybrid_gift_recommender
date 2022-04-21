@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/pages.dart';
-import 'package:hybrid_gift/src/widgets.dart';
+import 'package:hybrid_gift/utils/widgets.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends Pages {

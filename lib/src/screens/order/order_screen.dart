@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/models/products.dart';
-import 'package:hybrid_gift/screens/order/order_body.dart';
-import 'package:hybrid_gift/screens/order/order_book.dart';
+import 'package:hybrid_gift/utils/products.dart';
+import 'package:hybrid_gift/src/screens/order/order_body.dart';
+import 'package:hybrid_gift/src/screens/order/order_book.dart';
 
 /// Creates the item details screen.
 

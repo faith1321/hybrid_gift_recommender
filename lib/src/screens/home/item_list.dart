@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/screens/order/order_book.dart';
+import 'package:hybrid_gift/utils/products.dart';
 import 'package:hybrid_gift/utils/constants.dart';
 
-class OrderList extends StatelessWidget {
-  final UserOrder order;
+class ItemList extends StatelessWidget {
+  final Product product;
   final Function()? press;
-  const OrderList({Key? key, required this.order, required this.press})
+  const ItemList({Key? key, required this.product, required this.press})
       : super(key: key);
 
   @override
@@ -16,9 +16,10 @@ class OrderList extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).hintColor,
+                color: product.color,
                 borderRadius: BorderRadius.circular(16),
               ),
+              child: Image.asset(product.image),
             ),
           ),
           Flexible(
@@ -27,9 +28,13 @@ class OrderList extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  order.orderedProduct,
+                  product.title,
                   style: const TextStyle(color: kTextLightColor),
                   // softWrap: false,
+                ),
+                Text(
+                  "£${product.price}",
+                  style: const TextStyle(color: kTextLightColor),
                 ),
               ],
             ),
