@@ -220,11 +220,7 @@ with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
 
 # ---------------------------------------------------------------------------- #
-<< << << < HEAD
 #                      Save metrics results into JSON file                     #
-== == == =
-#                                Output Testing                                #
->>>>>> > 466cc98651fe0ec3a8a8b4a97d9fc962d67de0f6
 # ---------------------------------------------------------------------------- #
 metrics = {key: round(float(a), 3) for key, a in metrics.items()}
 metrics = {datetime.now().strftime("%Y%m%d-%H%M%S"): metrics}
