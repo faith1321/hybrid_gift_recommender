@@ -97,5 +97,49 @@
         "loss": 44440.383,
         "regularization_loss": 0.0,
         "total_loss": 44440.383
+    },
+    "20220421-151840": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.002,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.017,
+        "factorized_top_k/top_100_categorical_accuracy": 0.037,
+        "root_mean_squared_error": 214.726,
+        "loss": 41430.348,
+        "regularization_loss": 0.0,
+        "total_loss": 41430.348
+    },
+    "20220421-152459": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.667,
+        "factorized_top_k/top_5_categorical_accuracy": 0.844,
+        "factorized_top_k/top_10_categorical_accuracy": 0.885,
+        "factorized_top_k/top_50_categorical_accuracy": 0.967,
+        "factorized_top_k/top_100_categorical_accuracy": 0.975,
+        "root_mean_squared_error": 1.458,
+        "loss": 7417.509,
+        "regularization_loss": 0.0,
+        "total_loss": 7417.509
+    },
+    "20220421-160421": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.002,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.017,
+        "factorized_top_k/top_100_categorical_accuracy": 0.036,
+        "root_mean_squared_error": 1707.048,
+        "loss": 42127.957,
+        "regularization_loss": 0.0,
+        "total_loss": 42127.957
+    },
+    "20220421-160529": {
+        "factorized_top_k/top_1_categorical_accuracy": 0.001,
+        "factorized_top_k/top_5_categorical_accuracy": 0.002,
+        "factorized_top_k/top_10_categorical_accuracy": 0.004,
+        "factorized_top_k/top_50_categorical_accuracy": 0.018,
+        "factorized_top_k/top_100_categorical_accuracy": 0.036,
+        "root_mean_squared_error": 2880.692,
+        "loss": 42697.672,
+        "regularization_loss": 0.0,
+        "total_loss": 42697.672
     }
 }
