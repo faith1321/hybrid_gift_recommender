@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
-import 'package:hybrid_gift/models/products.dart';
+import 'package:hybrid_gift/utils/products.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 class ProductPage extends StatelessWidget {
   final Product product;

@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/src/pages.dart';
-import 'package:hybrid_gift/src/widgets.dart';
+import 'package:hybrid_gift/utils/widgets.dart';
 import 'package:provider/provider.dart';
 
 class UserPage extends Pages {
@@ -27,6 +26,16 @@ class _UserPageState extends State<UserPage> {
                     children: <Widget>[
                       Column(
                         children: [
+                          // IconButton(
+                          //   onPressed: () {},
+                          //   icon: const Icon(Icons.account_circle_rounded),
+                          //   iconSize: 100,
+                          //   color: Theme.of(context).hintColor,
+                          // ),
+                          context.select(
+                            (ApplicationState _state) =>
+                                _state.getProfileImage(),
+                          ),
                           Container(
                             decoration: BoxDecoration(
                               color: Theme.of(context).backgroundColor,

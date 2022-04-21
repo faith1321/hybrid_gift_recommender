@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/pages.dart';
 
-import 'widgets.dart';
+import '../utils/widgets.dart';
 
 enum ApplicationLoginState {
   loggedOut,
@@ -134,7 +134,7 @@ class Authentication extends StatelessWidget {
             child: ListBody(
               children: <Widget>[
                 Text(
-                  '${(e as dynamic).message}',
+                  '${(e as dynamic).orderedProduct}',
                   style: const TextStyle(fontSize: 18),
                 ),
               ],

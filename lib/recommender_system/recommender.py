@@ -192,6 +192,11 @@ train = train.shuffle(BATCH_SIZE).batch(BATCH_SIZE).cache()
 test = test.batch(BATCH_SIZE).cache()
 
 model.fit(train, epochs=100, callbacks=[earlystopping, tensorboard_callback])
+# model.fit(cachedTrain, epochs=10)
+
+# ---------------------------------------------------------------------------- #
+#                               Model Evaluation                               #
+# ---------------------------------------------------------------------------- #
 metrics = model.evaluate(test, return_dict=True)
 
 print(
@@ -215,7 +220,11 @@ with open('assets/model.tflite', 'wb') as f:
     f.write(tflite_model)
 
 # ---------------------------------------------------------------------------- #
+<< << << < HEAD
 #                      Save metrics results into JSON file                     #
+== == == =
+#                                Output Testing                                #
+>>>>>> > 466cc98651fe0ec3a8a8b4a97d9fc962d67de0f6
 # ---------------------------------------------------------------------------- #
 metrics = {key: round(float(a), 3) for key, a in metrics.items()}
 metrics = {datetime.now().strftime("%Y%m%d-%H%M%S"): metrics}

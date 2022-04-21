@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
-import 'package:hybrid_gift/models/products.dart';
-import 'package:hybrid_gift/screens/home/details/details_body.dart';
-import 'package:hybrid_gift/search_bar.dart';
+import 'package:hybrid_gift/utils/products.dart';
+import 'package:hybrid_gift/src/screens/home/details/details_body.dart';
 
 /// Creates the item details screen.
 

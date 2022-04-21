@@ -1,11 +1,18 @@
 import 'dart:async';
+
+import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hybrid_gift/src/screens/order/order_book.dart';
 import 'package:hybrid_gift/src/authentication.dart';
 
 class ApplicationState extends ChangeNotifier {
   late final FirebaseAuth _auth = FirebaseAuth.instance;
+  StreamSubscription<QuerySnapshot>? _userBookSubscription;
+  List<UserOrder> _userOrders = [];
+  List<UserOrder> get userOrders => _userOrders;
 
   ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _loginState;
@@ -23,8 +30,24 @@ class ApplicationState extends ChangeNotifier {
     _auth.userChanges().listen((user) {
       if (user != null) {
         _loginState = ApplicationLoginState.loggedIn;
+        _userBookSubscription = FirebaseFirestore.instance
+            .collection('users')
+            .where("displayName", isEqualTo: _auth.currentUser?.displayName)
+            .snapshots()
+            .listen((snapshot) {
+          for (final document in snapshot.docs) {
+            _userOrders.add(
+              UserOrder(
+                orderedProduct: document.data()['order'] as String,
+              ),
+            );
+          }
+          notifyListeners();
+        });
       } else {
         _loginState = ApplicationLoginState.loggedOut;
+        _userOrders = [];
+        _userBookSubscription?.cancel();
       }
       notifyListeners();
     });
@@ -128,5 +151,41 @@ class ApplicationState extends ChangeNotifier {
 
   void signOut() {
     _auth.signOut();
+  }
+
+  Future<CameraDescription> loadCamera() async {
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    final firstCamera = cameras.first;
+
+    return firstCamera;
+  }
+
+  /// Appends a new order to Firebase Firestore and
+  /// updates the changes to the local list.
+  Future<void> addOrderToUser(String order) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+
+    return FirebaseFirestore.instance.collection('users').add(
+      <String, dynamic>{
+        'displayName': _auth.currentUser?.displayName,
+        'order': order,
+      },
+      //   .collection('users')
+      //   .doc(_auth.currentUser?.displayName)
+      //   .set(
+      // <String, dynamic>{
+      //   'order': order,
+      // },
+      // SetOptions(merge: true),
+    );
+  }
+
+  void clearList() {
+    _userOrders = [];
   }
 }

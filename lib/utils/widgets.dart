@@ -16,12 +16,12 @@ class Header extends StatelessWidget {
 
 class Paragraph extends StatelessWidget {
   const Paragraph(this.content);
-  final String content;
+  final String? content;
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Text(
-          content,
+          content!,
           style: const TextStyle(fontSize: 18),
         ),
       );

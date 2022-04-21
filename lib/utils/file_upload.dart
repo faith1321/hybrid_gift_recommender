@@ -43,10 +43,10 @@ class _ImageUploadState extends State<ImageUpload> {
           imageUrl = downloadUrl;
         });
       } else {
-        print('No Image Path Received');
+        // print('No Image Path Received');
       }
     } else {
-      print('Permission not granted. Try Again with permission access');
+      // print('Permission not granted. Try Again with permission access');
     }
   }
 

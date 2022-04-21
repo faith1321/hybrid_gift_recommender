@@ -5,8 +5,6 @@ class "hybrid_gift::file_upload.dart::ImageUpload" {
   +_ImageUploadState createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "hybrid_gift::file_upload.dart::ImageUpload"
-
 class "hybrid_gift::file_upload.dart::_ImageUploadState" {
   +dynamic imageUrl
   -FirebaseStorage _firebaseStorage
@@ -16,14 +14,11 @@ class "hybrid_gift::file_upload.dart::_ImageUploadState" {
 }
 
 "hybrid_gift::file_upload.dart::_ImageUploadState" o-- "firebase_storage::firebase_storage.dart::FirebaseStorage"
-"flutter::src::widgets::framework.dart::State" <|-- "hybrid_gift::file_upload.dart::_ImageUploadState"
 
 class "hybrid_gift::search_bar.dart::SearchBar" {
   +String type
   +State<SearchBar> createState()
 }
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "hybrid_gift::search_bar.dart::SearchBar"
 
 class "hybrid_gift::search_bar.dart::_SearchBarState" {
   -Color _color
@@ -39,9 +34,7 @@ class "hybrid_gift::search_bar.dart::_SearchBarState" {
 
 "hybrid_gift::search_bar.dart::_SearchBarState" o-- "dart::ui::Color"
 "hybrid_gift::search_bar.dart::_SearchBarState" o-- "flutter::src::widgets::icon.dart::Icon"
-"hybrid_gift::search_bar.dart::_SearchBarState" o-- "flutter::src::widgets::framework.dart::Widget"
 "hybrid_gift::search_bar.dart::_SearchBarState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-"flutter::src::widgets::framework.dart::State" <|-- "hybrid_gift::search_bar.dart::_SearchBarState"
 
 class "hybrid_gift::models::products.dart::Product" {
   +String image

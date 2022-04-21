@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/constants.dart';
-import 'package:hybrid_gift/models/products.dart';
+import 'package:hybrid_gift/utils/products.dart';
 import 'package:hybrid_gift/recommender_system/agent.dart';
-
-import '../item_card.dart';
-import '../item_list.dart';
-import 'add_cart.dart';
-import 'color_and_size.dart';
-import 'counter.dart';
-import 'description.dart';
-import 'details_screen.dart';
-import 'product_page.dart';
+import 'package:hybrid_gift/src/screens/home/details/add_cart.dart';
+import 'package:hybrid_gift/src/screens/home/details/color_and_size.dart';
+import 'package:hybrid_gift/src/screens/home/details/counter.dart';
+import 'package:hybrid_gift/src/screens/home/details/description.dart';
+import 'package:hybrid_gift/src/screens/home/details/details_screen.dart';
+import 'package:hybrid_gift/src/screens/home/details/product_page.dart';
+import 'package:hybrid_gift/src/screens/home/item_list.dart';
+import 'package:hybrid_gift/utils/constants.dart';
 
 class DetailsBody extends StatelessWidget {
   final Product product;
