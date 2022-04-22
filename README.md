@@ -59,12 +59,21 @@ There are 2 segments in this project:
 
 1. Hybrid Application
 
-    - [lib](lib/): [`main.dart`](lib/main.dart) is the main file to be run and is the entry point into the application.
-    - [lib/screens](lib/screens/): 
+    - [lib/](lib/): contains files that implement the base framework of the application. [`main.dart`](lib/main.dart) is the main file to be run and is the entry point into the application.
+    - [lib/src/](lib/src/): contains [`pages.dart`](lib/src/pages.dart) that defines and manages the logic of page navigation.
+    - [lib/src/screens/](lib/src/screens/): contains the . It also contains the folders with the files for each display screen: the Home Page, the Order Page and the User Page.
+    - [lib/utils/](lib/utils/): contains utility items used across the whole project:
+      - [Camera Access](lib/utils/camera.dart)
+      - [Constants](lib/utils/constants.dart)
+      - [Digital Templates](lib/utils/digital_templates.dart)
+      - [File Upload](lib/utils/file_upload.dart)
+      - [Products](lib/utils/products.dart)
+      - [Search Bar](lib/utils/search_bar.dart)
+      - [Widgets](lib/utils/widgets.dart)
     <!-- #TODO -->
 
 2. Recommender System
-    - [lib/recommender_system](lib/recommender_system/): contains the recommender system Python scripts. [`recommender.py`](lib/recommender_system/recommender.py) is the main file that generates the model and converts it into a TensorFlow SavedModel and then TFLite model, storing it in [assets](assets/).
+    - [lib/recommender_system/](lib/recommender_system/): contains the recommender system Python scripts. [`recommender.py`](lib/recommender_system/recommender.py) is the main file that generates the model and converts it into a TensorFlow SavedModel and then TFLite model, storing it in [assets/](assets/).
 
 <!-- ### 1. [collecting_data](collecting_data/)
 

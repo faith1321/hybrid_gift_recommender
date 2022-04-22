@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hybrid_gift/src/application_state.dart';
-import 'package:hybrid_gift/src/authentication.dart';
+import 'package:hybrid_gift/application_state.dart';
+import 'package:hybrid_gift/authentication.dart';
 import 'package:hybrid_gift/utils/constants.dart';
 import 'package:provider/provider.dart';
 

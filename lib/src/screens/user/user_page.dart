@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/src/application_state.dart';
+import 'package:hybrid_gift/application_state.dart';
 import 'package:hybrid_gift/src/pages.dart';
 import 'package:hybrid_gift/utils/widgets.dart';
 import 'package:provider/provider.dart';

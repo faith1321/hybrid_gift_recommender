@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hybrid_gift/src/pages.dart';
 
-import '../utils/widgets.dart';
+import 'utils/widgets.dart';
 
 enum ApplicationLoginState {
   loggedOut,
