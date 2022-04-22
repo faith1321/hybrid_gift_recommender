@@ -14,18 +14,11 @@ class OrderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-            alignment: Alignment.topRight,
-            icon: const Icon(Icons.add_circle_outline_rounded),
             onPressed: () {
-              context.read<ApplicationState>().addOrderToUser(orderedItem);
-            },
-          ),
-          IconButton(
-            onPressed: () {
-              context.read<ApplicationState>().clearList();
+              context.read<ApplicationState>().clearUserOrders();
             },
             icon: const Icon(Icons.delete_outline_rounded),
           ),
@@ -54,32 +47,7 @@ class OrderPage extends StatelessWidget {
               ),
             ),
           ),
-          // UserBook(orders: appState.userOrders),
         ),
-
-        // builder: ((context, appState, _) => CustomScrollView(
-        //       shrinkWrap: true,
-        //       slivers: <Widget>[
-        //         SliverPadding(
-        //           padding: const EdgeInsets.all(20.0),
-        //           sliver: SliverList(
-        //             delegate: SliverChildBuilderDelegate(
-        //               (context, index) => OrderList(
-        //                 order: appState.userOrders[index],
-        //                 press: () => Navigator.push<MaterialPageRoute>(
-        //                   context,
-        //                   MaterialPageRoute(
-        //                     builder: (context) => const OrderScreen(),
-        //                   ),
-        //                 ),
-        //               ),
-        //               childCount: appState.userOrders.length,
-        //             ),
-        //           ),
-        //         ),
-        //         // UserBook(orders: appState.userOrders),
-        //       ],
-        //     )),
       )
     ]);
   }

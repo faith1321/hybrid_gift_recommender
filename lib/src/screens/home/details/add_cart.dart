@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/utils/products.dart';
+import 'package:hybrid_gift/src/application_state.dart';
 import 'package:hybrid_gift/utils/constants.dart';
+import 'package:hybrid_gift/utils/products.dart';
+import 'package:provider/provider.dart';
 
 class AddCart extends StatelessWidget {
   final Product product;
@@ -48,7 +50,11 @@ class AddCart extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context
+                      .read<ApplicationState>()
+                      .addOrderToUser(product.title);
+                },
               ),
             ),
           ),

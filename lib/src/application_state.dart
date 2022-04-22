@@ -35,6 +35,7 @@ class ApplicationState extends ChangeNotifier {
             .where("displayName", isEqualTo: _auth.currentUser?.displayName)
             .snapshots()
             .listen((snapshot) {
+          _userOrders = [];
           for (final document in snapshot.docs) {
             _userOrders.add(
               UserOrder(
@@ -185,7 +186,16 @@ class ApplicationState extends ChangeNotifier {
     );
   }
 
-  void clearList() {
+  void clearUserOrders() {
     _userOrders = [];
+    FirebaseFirestore.instance
+        .collection("users")
+        .where("displayName", isEqualTo: _auth.currentUser?.displayName)
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
   }
 }
