@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/utils/products.dart';
 import 'package:hybrid_gift/src/screens/home/categories.dart';
 import 'package:hybrid_gift/src/screens/home/details/details_screen.dart';
 import 'package:hybrid_gift/src/screens/home/item_card.dart';
 import 'package:hybrid_gift/utils/constants.dart';
+import 'package:hybrid_gift/utils/products.dart';
 
 /// Loads the main functional elements into the Home Page.
 class HomePage extends StatelessWidget {
