@@ -1,5 +1,6 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/utils/products.dart';
 import 'package:hybrid_gift/recommender_system/agent.dart';
 import 'package:hybrid_gift/src/screens/home/details/add_cart.dart';
 import 'package:hybrid_gift/src/screens/home/details/color_and_size.dart';
@@ -9,6 +10,7 @@ import 'package:hybrid_gift/src/screens/home/details/details_screen.dart';
 import 'package:hybrid_gift/src/screens/home/details/product_page.dart';
 import 'package:hybrid_gift/src/screens/home/item_list.dart';
 import 'package:hybrid_gift/utils/constants.dart';
+import 'package:hybrid_gift/utils/products.dart';
 
 class DetailsBody extends StatelessWidget {
   final Product product;
@@ -69,7 +71,8 @@ class DetailsBody extends StatelessWidget {
                           child: ListView.builder(
                             itemCount: 3,
                             itemBuilder: (context, index) => ItemList(
-                              product: products[index],
+                              product:
+                                  products[Random().nextInt(products.length)],
                               press: () => Navigator.push<MaterialPageRoute>(
                                 context,
                                 MaterialPageRoute(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/utils/products.dart';
+import 'package:hybrid_gift/application_state.dart';
 import 'package:hybrid_gift/src/screens/order/order_list.dart';
 import 'package:hybrid_gift/src/screens/order/order_screen.dart';
-import 'package:hybrid_gift/application_state.dart';
 import 'package:hybrid_gift/utils/constants.dart';
+import 'package:hybrid_gift/utils/products.dart';
 import 'package:provider/provider.dart';
 
 class OrderPage extends StatelessWidget {
