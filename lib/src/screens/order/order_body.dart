@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hybrid_gift/application_state.dart';
 import 'package:hybrid_gift/src/screens/order/order_book.dart';
 import 'package:hybrid_gift/utils/constants.dart';
-import 'package:hybrid_gift/utils/image_upload.dart';
+import 'package:hybrid_gift/utils/digital_wrapping.dart';
 import 'package:hybrid_gift/utils/products.dart';
-import 'package:provider/provider.dart';
 
 class OrderBody extends StatelessWidget {
   final UserOrder order;
@@ -43,13 +41,10 @@ class OrderBody extends StatelessWidget {
                     ),
                   ],
                 ),
-                FittedBox(
-                  alignment: Alignment.bottomRight,
-                  child: Image.asset(
-                    product.image,
-                    fit: BoxFit.contain,
-                    width: 200,
-                  ),
+                Image.asset(
+                  product.image,
+                  fit: BoxFit.contain,
+                  width: 200,
                 ),
                 SizedBox(
                   height: 50,
@@ -73,7 +68,7 @@ class OrderBody extends StatelessWidget {
                       Navigator.push<MaterialPageRoute>(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ImageUpload(),
+                          builder: (context) => DigitalWrapping(order: order),
                         ),
                       );
                     },

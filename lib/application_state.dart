@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,9 @@ class ApplicationState extends ChangeNotifier {
 
   Future<void> init() async {
     await Firebase.initializeApp();
+    await FirebaseAppCheck.instance.activate(
+      webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+    );
 
     _auth.userChanges().listen((user) {
       if (user != null) {
@@ -196,6 +200,21 @@ class ApplicationState extends ChangeNotifier {
       for (DocumentSnapshot ds in snapshot.docs) {
         ds.reference.delete();
       }
+    });
+  }
+
+  Future<DocumentReference> addMessageToUserBook(String message) {
+    if (_loginState != ApplicationLoginState.loggedIn) {
+      throw Exception('Must be logged in');
+    }
+
+    return FirebaseFirestore.instance
+        .collection('userbook')
+        .add(<String, dynamic>{
+      'text': message,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      // 'name': FirebaseAuth.instance.currentUser!.displayName,
+      // 'userId': FirebaseAuth.instance.currentUser!.uid,
     });
   }
 }

@@ -77,24 +77,22 @@ class _PagesState extends State<Pages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Triggers sign out process if [_visibilityLogOut] is true.
-            if (_visibilityLogOut)
-              UserPage(anotherSignOut: widget.signOut)
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Triggers sign out process if [_visibilityLogOut] is true.
+          if (_visibilityLogOut)
+            UserPage(anotherSignOut: widget.signOut)
 
-            // Otherwise, change to the selected page.
-            else if (_selectedIndex == 0)
-              const Expanded(child: HomePage())
-            else if (_selectedIndex == 1)
-              OrderPage()
-            else
-              Container(),
-          ],
-        ),
+          // Otherwise, change to the selected page.
+          else if (_selectedIndex == 0)
+            const Expanded(child: HomePage())
+          else if (_selectedIndex == 1)
+            OrderPage()
+          else
+            Container(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

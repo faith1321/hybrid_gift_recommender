@@ -27,7 +27,7 @@ class OrderPage extends StatelessWidget {
       Center(
         child: Consumer<ApplicationState>(
           builder: (context, appState, _) => SizedBox(
-            height: .5 * MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * .75,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
               child: ListView.builder(
