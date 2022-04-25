@@ -13,7 +13,7 @@ late final CameraDescription firstCamera;
 /// Instantiates [ApplicationState] and [App].
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
-// can be called before `runApp()`
+  // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
 
   final cameras = await availableCameras();

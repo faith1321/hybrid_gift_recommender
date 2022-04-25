@@ -70,10 +70,10 @@ There are 2 segments in this project:
       - [Products](lib/utils/products.dart)
       - [Search Bar](lib/utils/search_bar.dart)
       - [Widgets](lib/utils/widgets.dart)
-    <!-- #TODO -->
 
 2. Recommender System
     - [lib/recommender_system/](lib/recommender_system/): contains the recommender system Python scripts. [`recommender.py`](lib/recommender_system/recommender.py) is the main file that generates the model and converts it into a TensorFlow SavedModel and then TFLite model, storing it in [assets/](assets/).
+      - Run [`results_test.py`](lib/recommender_system/results_test.py) to start testing the model.
 
 <!-- ### 1. [collecting_data](collecting_data/)
 
