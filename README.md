@@ -1,7 +1,5 @@
 # Hybrid Gifting App with Product Recommender System
 
-A Flutter application that recommends products based on user ratings and product similarities.
-
 - [About the Project](#about-the-project)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
@@ -12,6 +10,7 @@ A Flutter application that recommends products based on user ratings and product
 - [Contact](#contact)
 
 ## About the Project
+A Flutter application that recommends products based on user ratings and product similarities.
 
 This project was done for my Final Year Dissertation during my Bachelor's degree.
 ### Built With

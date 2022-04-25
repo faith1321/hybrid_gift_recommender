@@ -1,823 +1,396 @@
-@startuml-svg
-
+@startuml
 set namespaceSeparator ::
 title Class Diagram
 left to right direction
 skinparam monochrome false
-  
 
-class "hybrid_gift::utils::file_upload.dart::ImageUpload" {
-
-+_ImageUploadState createState()
-
+class "hybrid_gift::application_state.dart::ApplicationState" {
+  -FirebaseAuth _auth
+  -StreamSubscription<QuerySnapshot<Object?>>? _userBookSubscription
+  -List<UserOrder> _userOrders
+  -ApplicationLoginState _loginState
+  -String? _email
+  +List<UserOrder> userOrders
+  +ApplicationLoginState loginState
+  +String? email
+  +Future<void> init()
+  +void startLoginFlow()
+  +Future<void> verifyEmail()
+  +Future<void> signInWithEmailAndPassword()
+  +void cancelRegistration()
+  +Future<void> registerAccount()
+  +Future<void> createUserWithEmail()
+  +Future<dynamic> updateDisplayName()
+  +String? getCurrentUID()
+  +String? getCurrentDisplayName()
+  +Future<dynamic> getCurrentUser()
+  +Widget getProfileImage()
+  +void signOut()
+  +Future<CameraDescription> loadCamera()
+  +Future<void> addOrderToUser()
+  +void clearUserOrders()
+  +Future<DocumentReference<Object?>> addMessageToUserBook()
 }
 
-class "hybrid_gift::utils::file_upload.dart::_ImageUploadState" {
-
-+dynamic imageUrl
-
--FirebaseStorage _firebaseStorage
-
-+void uploadImage()
-
--Future<void> _delete()
-
-+Widget build()
-
-}
-
-  
-
-"hybrid_gift::utils::file_upload.dart::_ImageUploadState" o-- "firebase_storage::firebase_storage.dart::FirebaseStorage"
-
-  
+"hybrid_gift::application_state.dart::ApplicationState" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"hybrid_gift::application_state.dart::ApplicationState" o-- "dart::async::StreamSubscription<QuerySnapshot<Object>>"
+"hybrid_gift::application_state.dart::ApplicationState" o-- "hybrid_gift::authentication.dart::ApplicationLoginState"
 
 class "hybrid_gift::utils::widgets.dart::Header" {
-
-+String heading
-
-+Widget build()
-
+  +String heading
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::utils::widgets.dart::Paragraph" {
-
-+String? content
-
-+Widget build()
-
+  +String? content
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::utils::widgets.dart::IconAndDetail" {
-
-+IconData icon
-
-+String detail
-
-+Widget build()
-
+  +String detail
+  +Widget build()
 }
-
-  
-
-"hybrid_gift::utils::widgets.dart::IconAndDetail" o-- "flutter::src::widgets::icon_data.dart::IconData"
-
-  
 
 class "hybrid_gift::utils::widgets.dart::StyledButton" {
-
-+Widget child
-
-+void Function() onPressed
-
-+Widget build()
-
+  +Widget build()
 }
-  
 
 class "hybrid_gift::utils::search_bar.dart::SearchBar" {
-
-+String type
-
-+State<SearchBar> createState()
-
+  +String type
+  +State<SearchBar> createState()
 }
-
-  
 
 class "hybrid_gift::utils::search_bar.dart::_SearchBarState" {
-
--Color _color
-
-+Icon customIcon
-
-+Widget customSearchBar
-
-+TextEditingController myController
-
--List<List<dynamic>> _data
-
--Future<void> _loadCSV()
-
--void _setColour()
-
-+void initState()
-
-+Widget build()
-
+  -Color _color
+  -List<List<dynamic>> _data
+  -Future<void> _loadCSV()
+  -void _setColour()
+  +void initState()
+  +Widget build()
 }
 
-
-
-"hybrid_gift::utils::search_bar.dart::_SearchBarState" o-- "flutter::src::widgets::icon.dart::Icon"
-
-"hybrid_gift::utils::search_bar.dart::_SearchBarState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-
-  
+"hybrid_gift::utils::search_bar.dart::_SearchBarState" o-- "dart::ui::Color"
 
 class "hybrid_gift::utils::products.dart::Product" {
-
-+String image
-
-+String title
-
-+String description
-
-+String id
-
-+int price
-
-+int size
-
-+Color color
-
+  +String image
+  +String title
+  +String description
+  +String id
+  +int price
+  +int size
+  +Color color
 }
 
-  
+"hybrid_gift::utils::products.dart::Product" o-- "dart::ui::Color"
 
-class "hybrid_gift::utils::digital_templates.dart::DigitalTemplates" {
-
-+State<DigitalTemplates> createState()
-
+class "hybrid_gift::utils::digital_wrapping.dart::DigitalWrapping" {
+  +UserOrder order
+  +State<DigitalWrapping> createState()
 }
 
-  
+"hybrid_gift::utils::digital_wrapping.dart::DigitalWrapping" o-- "hybrid_gift::src::screens::order::order_book.dart::UserOrder"
 
-class "hybrid_gift::utils::digital_templates.dart::_DigitalTemplatesState" {
-
-+Widget build()
-
+class "hybrid_gift::utils::digital_wrapping.dart::_DigitalWrappingState" {
+  +int mediaCount
+  +DigitalWrapping widget
+  +Widget build()
+  -void _increaseMediaCount()
 }
 
-  
+"hybrid_gift::utils::digital_wrapping.dart::_DigitalWrappingState" o-- "hybrid_gift::utils::digital_wrapping.dart::DigitalWrapping"
+
+class "hybrid_gift::utils::media_upload.dart::MediaUpload" {
+  +int mediaCount
+  +_MediaUploadState createState()
+}
+
+class "hybrid_gift::utils::media_upload.dart::_MediaUploadState" {
+  -FirebaseStorage _firebaseStorage
+  +List<String?> imageUrl
+  +List<String> messages
+  +MediaUpload widget
+  -void _uploadImage()
+  -Future<List<Map<String, dynamic>>> _loadImages()
+  -Future<void> _delete()
+  +Widget build()
+  -Future<Widget> _insertText()
+}
+
+"hybrid_gift::utils::media_upload.dart::_MediaUploadState" o-- "firebase_storage::firebase_storage.dart::FirebaseStorage"
+"hybrid_gift::utils::media_upload.dart::_MediaUploadState" o-- "hybrid_gift::utils::media_upload.dart::MediaUpload"
 
 class "hybrid_gift::utils::camera.dart::Camera" {
-
-+CameraState createState()
-
+  +CameraState createState()
 }
-
-  
 
 class "hybrid_gift::utils::camera.dart::CameraState" {
-
--CameraController _controller
-
--Future<void> _initializeControllerFuture
-
-+CameraDescription camera
-
-+void initState()
-
-+void dispose()
-
-+Widget build()
-
+  -CameraController _controller
+  -Future<void> _initializeControllerFuture
+  +CameraDescription camera
+  +void initState()
+  +void dispose()
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::utils::camera.dart::CameraState" o-- "camera::src::camera_controller.dart::CameraController"
-
 "hybrid_gift::utils::camera.dart::CameraState" o-- "camera_platform_interface::src::types::camera_description.dart::CameraDescription"
 
-  
-
 class "hybrid_gift::utils::camera.dart::DisplayPictureScreen" {
-
-+String imagePath
-
-+Widget build()
-
+  +String imagePath
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::main.dart::App" {
-
-+Widget build()
-
+  +Widget build()
 }
 
-  
+class "hybrid_gift::authentication.dart::Authentication" {
+  +ApplicationLoginState loginState
+  +String? email
+  +Widget build()
+  +Scaffold loginProcedure()
+  -void _showErrorDialog()
+}
+
+"hybrid_gift::authentication.dart::Authentication" o-- "hybrid_gift::authentication.dart::ApplicationLoginState"
+
+class "hybrid_gift::authentication.dart::EmailForm" {
+  +_EmailFormState createState()
+}
+
+class "hybrid_gift::authentication.dart::_EmailFormState" {
+  +Widget build()
+}
+
+class "hybrid_gift::authentication.dart::RegisterForm" {
+  +String email
+  +_RegisterFormState createState()
+}
+
+class "hybrid_gift::authentication.dart::_RegisterFormState" {
+  +void initState()
+  +Widget build()
+}
+
+class "hybrid_gift::authentication.dart::PasswordForm" {
+  +String email
+  +_PasswordFormState createState()
+}
+
+class "hybrid_gift::authentication.dart::_PasswordFormState" {
+  +void initState()
+  +Widget build()
+}
+
+class "hybrid_gift::authentication.dart::ApplicationLoginState" {
+  +int index
+  {static} +List<ApplicationLoginState> values
+  {static} +ApplicationLoginState loggedOut
+  {static} +ApplicationLoginState emailAddress
+  {static} +ApplicationLoginState register
+  {static} +ApplicationLoginState password
+  {static} +ApplicationLoginState loggedIn
+}
+
+"hybrid_gift::authentication.dart::ApplicationLoginState" o-- "hybrid_gift::authentication.dart::ApplicationLoginState"
+"dart::core::Enum" <|-- "hybrid_gift::authentication.dart::ApplicationLoginState"
 
 class "hybrid_gift::recommender_system::agent.dart::Agent" {
-
--String _modelFile
-
--Interpreter? _interpreter
-
--void _loadModel()
-
-+List<dynamic> predict()
-
+  -String _modelFile
+  -void _loadModel()
+  +List<dynamic> predict()
 }
-
-  
-
-"hybrid_gift::recommender_system::agent.dart::Agent" o-- "tflite_flutter::src::interpreter.dart::Interpreter"
-
-  
 
 class "hybrid_gift::src::pages.dart::Pages" {
-
-+void Function() signOut
-
-+State<Pages> createState()
-
+  +State<Pages> createState()
 }
-
-  
 
 class "hybrid_gift::src::pages.dart::_PagesState" {
-
--int _selectedIndex
-
--bool _visibilityLogOut
-
-+Widget customSearchBar
-
--Color _color
-
-+Icon customIcon
-
-+TextEditingController myController
-
-+List<List<dynamic>> data
-
-+bool isShowSearchBar
-
--void _onNavBarItemTapped()
-
--void _onLogOutTapped()
-
--Future<List<dynamic>> _loadCSV()
-
-+void initState()
-
-+Widget build()
-
-+AppBar buildAppBar()
-
+  -int _selectedIndex
+  -bool _visibilityLogOut
+  -Color _color
+  +List<List<dynamic>> data
+  +bool isShowSearchBar
+  -void _onNavBarItemTapped()
+  -void _onLogOutTapped()
+  -Future<List<dynamic>> _loadCSV()
+  +void initState()
+  +Widget build()
+  +AppBar buildAppBar()
 }
 
-
-"hybrid_gift::src::pages.dart::_PagesState" o-- "flutter::src::widgets::icon.dart::Icon"
-
-"hybrid_gift::src::pages.dart::_PagesState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-
-  
-
-class "hybrid_gift::src::application_state.dart::ApplicationState" {
-
--FirebaseAuth _auth
-
--StreamSubscription<QuerySnapshot<Object?>>? _userBookSubscription
-
--List<UserOrder> _userOrders
-
--ApplicationLoginState _loginState
-
--String? _email
-
-+List<UserOrder> userOrders
-
-+ApplicationLoginState loginState
-
-+String? email
-
-+Future<void> init()
-
-+void startLoginFlow()
-
-+Future<void> verifyEmail()
-
-+Future<void> signInWithEmailAndPassword()
-
-+void cancelRegistration()
-
-+Future<void> registerAccount()
-
-+Future<void> createUserWithEmail()
-
-+Future<dynamic> updateDisplayName()
-
-+String? getCurrentUID()
-
-+String? getCurrentDisplayName()
-
-+Future<dynamic> getCurrentUser()
-
-+Widget getProfileImage()
-
-+void signOut()
-
-+Future<CameraDescription> loadCamera()
-
-+Future<void> addOrderToUser()
-
-+void clearList()
-
-}
-
-  
-
-"hybrid_gift::src::application_state.dart::ApplicationState" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
-
-"hybrid_gift::src::application_state.dart::ApplicationState" o-- "dart::async::StreamSubscription<QuerySnapshot<Object>>"
-
-"hybrid_gift::src::application_state.dart::ApplicationState" o-- "hybrid_gift::src::authentication.dart::ApplicationLoginState"
-
-  
+"hybrid_gift::src::pages.dart::_PagesState" o-- "dart::ui::Color"
 
 class "hybrid_gift::src::screens::order::order_page.dart::OrderPage" {
-
-+String orderedItem
-
-+Widget build()
-
+  +String orderedItem
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::src::screens::order::order_list.dart::OrderList" {
-
-+UserOrder order
-
-+dynamic Function()? press
-
-+Widget build()
-
+  +UserOrder order
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::order::order_list.dart::OrderList" o-- "hybrid_gift::src::screens::order::order_book.dart::UserOrder"
 
-  
-
 class "hybrid_gift::src::screens::order::order_body.dart::OrderBody" {
-
-+UserOrder order
-
-+Widget build()
-
+  +UserOrder order
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::order::order_body.dart::OrderBody" o-- "hybrid_gift::src::screens::order::order_book.dart::UserOrder"
 
-  
-
 class "hybrid_gift::src::screens::order::order_book.dart::UserOrder" {
-
-+String orderedProduct
-
+  +String orderedProduct
 }
-
-  
 
 class "hybrid_gift::src::screens::order::order_book.dart::OrderBook" {
-
-+FutureOr<void> Function(String) user
-
-+List<UserOrder> products
-
-+_OrderBookState createState()
-
+  +List<UserOrder> products
+  +_OrderBookState createState()
 }
-
-  
 
 class "hybrid_gift::src::screens::order::order_book.dart::_OrderBookState" {
-
-+Widget build()
-
+  +Widget build()
 }
 
-  
+class "hybrid_gift::src::screens::order::wrapping_grid.dart::WrappingGrid" {
+  +State<WrappingGrid> createState()
+}
+
+class "hybrid_gift::src::screens::order::wrapping_grid.dart::_WrappingGridState" {
+  +Widget build()
+}
 
 class "hybrid_gift::src::screens::order::order_screen.dart::OrderScreen" {
-
-+UserOrder order
-
-+_OrderScreenState createState()
-
+  +UserOrder order
+  +_OrderScreenState createState()
 }
-
-  
 
 "hybrid_gift::src::screens::order::order_screen.dart::OrderScreen" o-- "hybrid_gift::src::screens::order::order_book.dart::UserOrder"
 
-  
-
 class "hybrid_gift::src::screens::order::order_screen.dart::_OrderScreenState" {
-
-+Icon customIcon
-
-+Widget customSearchBar
-
-+OrderScreen widget
-
-+Widget build()
-
-+AppBar buildAppBar()
-
+  +OrderScreen widget
+  +Widget build()
+  +AppBar buildAppBar()
 }
-
-  
-
-"hybrid_gift::src::screens::order::order_screen.dart::_OrderScreenState" o-- "flutter::src::widgets::icon.dart::Icon"
 
 "hybrid_gift::src::screens::order::order_screen.dart::_OrderScreenState" o-- "hybrid_gift::src::screens::order::order_screen.dart::OrderScreen"
 
-  
-
 class "hybrid_gift::src::screens::home::body.dart::Body" {
-
-+Widget build()
-
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::src::screens::home::details::add_cart.dart::AddCart" {
-
-+Product product
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::details::add_cart.dart::AddCart" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::details::description.dart::Description" {
-
-+Product product
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::details::description.dart::Description" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::details::details_screen.dart::DetailsScreen" {
-
-+Product product
-
-+_DetailsScreenState createState()
-
+  +Product product
+  +_DetailsScreenState createState()
 }
-
-  
 
 "hybrid_gift::src::screens::home::details::details_screen.dart::DetailsScreen" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::details::details_screen.dart::_DetailsScreenState" {
-
-+Icon customIcon
-
-+Widget customSearchBar
-
-+DetailsScreen widget
-
-+Widget build()
-
-+AppBar buildAppBar()
-
+  +DetailsScreen widget
+  +Widget build()
+  +AppBar buildAppBar()
 }
-
-  
-
-"hybrid_gift::src::screens::home::details::details_screen.dart::_DetailsScreenState" o-- "flutter::src::widgets::icon.dart::Icon"
 
 "hybrid_gift::src::screens::home::details::details_screen.dart::_DetailsScreenState" o-- "hybrid_gift::src::screens::home::details::details_screen.dart::DetailsScreen"
 
-  
-
 class "hybrid_gift::src::screens::home::details::cart_counter.dart::CartCounter" {
-
-+_CartCounterState createState()
-
+  +_CartCounterState createState()
 }
-
-  
 
 class "hybrid_gift::src::screens::home::details::cart_counter.dart::_CartCounterState" {
-
-+int numOfItems
-
-+Widget build()
-
-+SizedBox buildOutlineButton()
-
+  +int numOfItems
+  +Widget build()
+  +SizedBox buildOutlineButton()
 }
-
-  
 
 class "hybrid_gift::src::screens::home::details::color_and_size.dart::ColorAndSize" {
-
-+Product product
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::details::color_and_size.dart::ColorAndSize" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::details::color_and_size.dart::ColorDot" {
-
-+Color color
-
-+bool isSelected
-
-+Widget build()
-
+  +Color color
+  +bool isSelected
+  +Widget build()
 }
 
-  
+"hybrid_gift::src::screens::home::details::color_and_size.dart::ColorDot" o-- "dart::ui::Color"
 
 class "hybrid_gift::src::screens::home::details::product_page.dart::ProductPage" {
-
-+Product product
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::details::product_page.dart::ProductPage" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::details::counter.dart::Counter" {
-
-+Widget build()
-
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::src::screens::home::details::details_body.dart::DetailsBody" {
-
-+Product product
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::details::details_body.dart::DetailsBody" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::item_list.dart::ItemList" {
-
-+Product product
-
-+dynamic Function()? press
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::item_list.dart::ItemList" o-- "hybrid_gift::utils::products.dart::Product"
-  
 
 class "hybrid_gift::src::screens::home::item_card.dart::ItemCard" {
-
-+Product product
-
-+dynamic Function()? press
-
-+Widget build()
-
+  +Product product
+  +Widget build()
 }
-
-  
 
 "hybrid_gift::src::screens::home::item_card.dart::ItemCard" o-- "hybrid_gift::utils::products.dart::Product"
 
-  
-
 class "hybrid_gift::src::screens::home::home_page.dart::HomePage" {
-
-+Widget build()
-
+  +Widget build()
 }
-
-  
 
 class "hybrid_gift::src::screens::home::categories.dart::Categories" {
-
-+_CategoriesState createState()
-
+  +_CategoriesState createState()
 }
-
-  
 
 class "hybrid_gift::src::screens::home::categories.dart::_CategoriesState" {
-
-+List<String> categories
-
-+int selectedIndex
-
-+Widget build()
-
-+Widget buildCategory()
-
+  +List<String> categories
+  +int selectedIndex
+  +Widget build()
+  +Widget buildCategory()
 }
-
-  
 
 class "hybrid_gift::src::screens::user::user_page.dart::UserPage" {
-
-+void Function() anotherSignOut
-
-+State<UserPage> createState()
-
+  +State<UserPage> createState()
 }
 
-  
+"hybrid_gift::src::pages.dart::Pages" <|-- "hybrid_gift::src::screens::user::user_page.dart::UserPage"
 
 class "hybrid_gift::src::screens::user::user_page.dart::_UserPageState" {
-
-+Widget build()
-
--Future<dynamic> _loadUser()
-
+  +Widget build()
+  -Future<dynamic> _loadUser()
 }
 
-  
-
-class "hybrid_gift::src::authentication.dart::Authentication" {
-
-+ApplicationLoginState loginState
-
-+String? email
-
-+void Function() startLoginFlow
-
-+void Function(String, void Function(Exception)) verifyEmail
-
-+void Function(String, String, void Function(Exception)) signInWithEmailAndPassword
-
-+void Function() cancelRegistration
-
-+void Function(String, String, String, void Function(Exception)) registerAccount
-
-+void Function() signOut
-
-{static} +TextStyle optionStyle
-
-+Widget build()
-
-+Scaffold loginProcedure()
-
--void _showErrorDialog()
-
-}
-
-  
-
-"hybrid_gift::src::authentication.dart::Authentication" o-- "hybrid_gift::src::authentication.dart::ApplicationLoginState"
-
-"hybrid_gift::src::authentication.dart::Authentication" o-- "flutter::src::painting::text_style.dart::TextStyle"
-
-  
-
-class "hybrid_gift::src::authentication.dart::EmailForm" {
-
-+void Function(String) callback
-
-+_EmailFormState createState()
-
-}
-
-  
-
-class "hybrid_gift::src::authentication.dart::_EmailFormState" {
-
--GlobalKey<FormState> _formKey
-
--TextEditingController _controller
-
-+Widget build()
-
-}
-
-
-"hybrid_gift::src::authentication.dart::_EmailFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-
-  
-
-class "hybrid_gift::src::authentication.dart::RegisterForm" {
-
-+String email
-
-+void Function(String, String, String) registerAccount
-
-+void Function() cancel
-
-+_RegisterFormState createState()
-
-}
-
-  
-
-class "hybrid_gift::src::authentication.dart::_RegisterFormState" {
-
--GlobalKey<FormState> _formKey
-
--TextEditingController _emailController
-
--TextEditingController _displayNameController
-
--TextEditingController _passwordController
-
-+void initState()
-
-+Widget build()
-
-}
-
-
-"hybrid_gift::src::authentication.dart::_RegisterFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-
-  
-
-class "hybrid_gift::src::authentication.dart::PasswordForm" {
-
-+String email
-
-+void Function(String, String) login
-
-+_PasswordFormState createState()
-
-}
-
-  
-
-class "hybrid_gift::src::authentication.dart::_PasswordFormState" {
-
--GlobalKey<FormState> _formKey
-
--TextEditingController _emailController
-
--TextEditingController _passwordController
-
-+void initState()
-
-+Widget build()
-
-}
-
-
-"hybrid_gift::src::authentication.dart::_PasswordFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
-
-  
-
-class "hybrid_gift::src::authentication.dart::ApplicationLoginState" {
-
-+int index
-
-{static} +List<ApplicationLoginState> values
-
-{static} +ApplicationLoginState loggedOut
-
-{static} +ApplicationLoginState emailAddress
-
-{static} +ApplicationLoginState register
-
-{static} +ApplicationLoginState password
-
-{static} +ApplicationLoginState loggedIn
-
-}
-  
-  
 
 @enduml

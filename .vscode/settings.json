@@ -1,6 +1,1 @@
-{
-    "files.exclude": {
-        "build/*": true,
-        "ios/*": true
-    }
-}
+{}
